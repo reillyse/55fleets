@@ -1,0 +1,8 @@
+- @certs.each do |c|
+  .row
+    .col-sm-12
+      #{c.name} #{link_to "Make Active", app_load_balancer_add_certificate_path(@app,@lb,c), :method => :put}
+
+.row
+  .col-sm-12
+    = link_to "Add a new certificate", app_certs_path(@app)

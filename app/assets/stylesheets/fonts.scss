@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Proxima Nova Regular';
+  src: font_url('proxima-nova-regular.eot'); /* IE9 Compat Modes */
+  src: font_url('proxima-nova-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       font_url('proxima-nova-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       font_url('proxima-nova-regular.woff') format('woff'), /* Pretty Modern Browsers */
+       font_url('proxima-nova-regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+       font_url('proxima-nova-regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}

@@ -1,0 +1,64 @@
+.container-fluid.full-bleed
+  .containernot
+    .bleed-background
+      .row
+        .col-sm-12
+          .headline
+            %h1 Deploy Your Docker Applications in Minutes
+          .second-headline
+            %h2 Enjoy the power of docker with the ease of automatic deployment and scaling
+          .button-wrapper 
+            = link_to "Deploy Your Apps Now", apps_path, :class => "btn btn-large btn-info"
+.container
+  .content-box
+    %p
+      55Fleets is a platform as a service (PAAS) built on top of docker and AWS for developers and dev-ops who are moving fast. It provides all the features required to deploy and mantain an application including webhook based deployment(from git), rolling deploys, load balancing, auto-provisioning of instances, easy spot instances, one click roll-back, multi-az deployments, instance monitoring and replacement, secret management etc.
+   
+    %h2 Rolling Deploys
+    %p
+      Rolling deploys by default. Each application has a set of load balancers, on a successful deployment we do a rolling deploy and swap in the new servers. 
+
+    %h2 Automatic Code Deployments
+    %p
+      As soon as you push to your Github or Bitbucket repository we pull the code, build your containers and deploy your application.
+
+    %h2 Simple web based configuration
+    %p
+      We have a simple configuration tool where you specify the number of instances you want to deploy and the docker-compose file you want to run. We take care of the rest.
+    %h2 Rely on AWS
+    %p
+      Take advantage of the security and stability of Amazon AWS. All your instances are in your own Virtual Private Cloud. Easily deploy to different availability zones and access other AWS based services with the speed that only comes from being in the same data center.
+    %h2 Take Advantage of Multi-AZ Deployments by Default
+    %p
+      We set up subnets in multiple availability zones for every app. We automatically disperse your on-demand servers evenly throughout these availability zones. This makes it easy to create a high-availability app and protect yourself from failures in any one availability zone.
+    %h2 Scale with ease from our dashboard with the click of a button
+    %p Scaling is extremely easy. Select the number of machines you want to add and click the button. We'll provision and start the machines with no downtime or interruption to your existing machines.
+    %h2 Stop Worrying About How to Deploy Secrets
+    %p Set up your secrets in our web interface and we'll inject them into your app as it launches. No more configuration files or commiting to code repositories.
+    %h2 Easy SSL
+    %p We terminate SSL at the load balancer. You can easily add and change your SSL certificates using our web interface.
+    %h2 Self Healing
+    %p
+      We detect when a machine is out of service and automatically replace it with a new one.
+    %h1 How it works.
+
+
+    %p
+      We use the the docker-compose tool to deploy your application. Once you commit your code we check out the new version, build it and then scale up the required number of instances. We then do a rolling deploy adding web servers to the load balancer if this option is specified. You should see zero downtime (come on it's 2016!).
+    %p
+      We then monitor your application. If any machines fail a keep-alive we spawn additional machines, replacing the old instances.
+    %p
+      If you mess up a deploy you can easily roll back to a previous version with one click. This is fast (sub 1 minute) as we don't need to build any images.
+    %h2
+      Get Started
+    %p
+      You'll need a docker-compose.yml file and at least one Dockerfile. These are standard docker files but we've provided you with samples #{link_to "here", setup_path}. These will work with a simple rails app and should be easily modifiable to work with any language or framework.
+  %h2 Ready to Deploy?
+  %p    
+    = link_to "Get Started  Now", apps_path, :class => "btn btn-large btn-info"
+
+    
+  
+
+
+

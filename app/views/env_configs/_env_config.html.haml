@@ -1,0 +1,10 @@
+- Rails.logger.debug env_config.inspect
+.row
+  .col-sm-2
+    #{env_config.name}
+  .col-sm-4
+    ***********************
+  .col-sm-2
+    = link_to "edit", edit_app_env_config_path(@app,env_config)
+  .col-sm-2
+    = link_to "delete", app_env_config_path(@app,env_config),:method => :delete

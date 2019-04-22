@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  encrypted_certificate: MyText
+  aws_ssl_cert_id: MyText
+  port: MyText
+
+two:
+  encrypted_certificate: MyText
+  aws_ssl_cert_id: MyText
+  port: MyText

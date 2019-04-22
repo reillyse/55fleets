@@ -1,0 +1,13 @@
+.container
+  .col-md-12
+    %h1 Your Apps
+    - @apps.each do |a|
+      .row.col-sm-12
+        .link
+          - if a.fleets.count > 0
+            = link_to a.name, app_fleets_path(a)
+          - else
+            = link_to a.name, a
+
+    .row.col-sm-12
+      = link_to "New", new_app_path, :class => "btn btn-large btn-info"

@@ -1,0 +1,5 @@
+%h1 Add Environment Configuration
+%p Values you provide here will be passed to Docker Compose on startup.
+%p You can add your secrets here.
+= link_to "Add", new_app_env_config_path(@app)
+= render @configs

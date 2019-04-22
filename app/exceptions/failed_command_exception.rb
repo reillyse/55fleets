@@ -1,0 +1,3 @@
+class FailedCommandException < StandardError
+  
+end

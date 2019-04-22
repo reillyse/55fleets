@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  load_balancer_id: 1
+  cert_id: 1
+
+two:
+  load_balancer_id: 1
+  cert_id: 1

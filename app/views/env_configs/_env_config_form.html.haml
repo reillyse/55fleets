@@ -1,0 +1,5 @@
+= link_to "Show All", app_env_configs_path(@app)
+= simple_form_for [@app,@env_config], html: { autocomplete: 'off' } do |f|
+  = f.input :name
+  = f.input :value
+  = f.submit "Save"

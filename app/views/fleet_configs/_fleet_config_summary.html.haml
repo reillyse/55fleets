@@ -1,0 +1,7 @@
+.row
+  .col-sm-3
+    = fleet_config_summary.created_at.strftime("%m/%d/%Y %I:%M%p")
+  .col-sm-3
+    = fleet_config_summary.pod_configs.count
+  .col-sm-3
+    = link_to "View", app_fleet_config_path(fleet_config_summary.app,fleet_config_summary), :class => "btn btn-large btn-info"

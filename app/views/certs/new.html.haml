@@ -1,0 +1,8 @@
+%h1 Add a new SSL Certificate
+= simple_form_for [@app,@cert] do |f|
+  = f.input :name, :as => :string
+  = f.input :certificate, :as => :text
+  = f.input :private_key, :as => :text
+  = f.input :cert_chain, :as => :text
+  = f.input :port, :as => :string
+  = f.submit

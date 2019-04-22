@@ -1,0 +1,71 @@
+-# .nav-bar
+-#   .nav-bar-inner
+-#     .nav-item
+-#       .logo
+-#         = link_to "55Fleets", root_path
+-#     - if current_user
+-#       .nav-item
+-#         = link_to "All Apps", apps_path
+-#       - if @app && @app.persisted?
+-#         .nav-item
+-#           = link_to "Fleets", app_fleets_path(@app)
+-#         .nav-item
+-#           = link_to "Fleet Config", app_fleet_configs_path(@app)
+-#       .nav-item
+-#         = link_to "Sign Out",  destroy_user_session_path, :method => :delete
+-#   - if current_user && @app && @app.persisted?
+-#     .nav-bar-bottom
+-#       .nav-item
+-#         - if @app.fleets.count > 0
+-#           = link_to @app.name, app_fleet_path(@app,@app.fleets.last)
+-#         - else
+-#           = link_to @app.name, app_path(@app)
+-#       .nav-item
+-#         = link_to "Config", @app
+- unless params[:action] == "welcome" || params[:action] == "setup"
+  .navigation
+    .row
+      .col-sm-2.left-menu
+        .menu-entry.home
+          = link_to "55FLEETS", root_path
+        .menu-entry.all-apps
+          = link_to "All Apps", apps_path
+        .menu-entry.sign-out
+          = link_to "Sign out", destroy_user_session_path, :method => :delete
+
+      .col-sm-10.body-wrapper
+        .container-fluid
+          .top-bar
+            - if @app && @app.persisted?
+              .nav-item.app
+                = link_to @app.name.upcase, @app
+              .nav-item.fleets
+                = link_to "Fleets", app_fleets_path(@app)
+              .nav-item.fleet_configs
+                = link_to "Fleet Config", app_fleet_configs_path(@app)
+
+        .content
+          = yield
+- else
+  = yield
+
+%script
+  var controller = "#{params[:controller]}";
+  var action = "#{params[:action]}";
+  switch(controller) {
+
+  case "apps":
+  $(".app").addClass("active-tab");
+  break;
+
+  case "fleet_configs":
+  if (action == "index") {
+  $(".fleet_configs").addClass("active-tab");
+  }
+  break;
+
+
+  case "fleets":
+  $(".fleets").addClass("active-tab");
+  break;
+  }

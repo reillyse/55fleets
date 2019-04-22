@@ -1,0 +1,2 @@
+class BuildPod < Pod
+end

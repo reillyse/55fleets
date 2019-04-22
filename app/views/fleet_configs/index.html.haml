@@ -1,0 +1,10 @@
+.container
+  %h1 #{@app.name }: Fleet Configs
+  .row
+    .col-sm-3
+      %h2 Created At
+    .col-sm-3
+      %h2 Number of Pod Configs
+    .col-sm-3
+      %h2 Action
+  = render :partial => "fleet_config_summary",  :collection => @fleet_configs

@@ -1,0 +1,5 @@
+.container-fluid
+  .col-sm-12
+    = simple_form_for @app, html: { class: 'form-horizontal' } do |f|
+      = f.input :name
+      = f.submit "Update"

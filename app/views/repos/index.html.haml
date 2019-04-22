@@ -1,0 +1,6 @@
+.container-fluid
+  .col-sm-12
+    %h1 All  Repos for #{current_user.name}
+    - @repos.each do |r|
+      .row
+        = r.url

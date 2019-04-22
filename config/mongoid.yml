@@ -1,0 +1,15 @@
+development:
+  clients:
+    default:
+      database: flywheel_development
+      hosts:
+        - localhost:27017
+staging:
+  clients:
+    default:
+      uri: '<%= ENV["MONGO_URL"] %>'
+
+production:
+  clients:
+    default:
+      uri: '<%= ENV["MONGO_URL"] %>'

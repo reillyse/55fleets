@@ -1,0 +1,9 @@
+.container
+  .h1
+    #{@repo.url}
+  .h2
+    Webhook
+  %p
+    #{webhook_url(@repo.secret_key)}
+  %p
+    Keep this url secret. It can be used to force a deployment of your app.  

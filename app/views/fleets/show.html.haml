@@ -1,0 +1,51 @@
+.container-fluid
+  .col-sm-12
+    = react_component("Fleet", { initialState: @fleet.for_react }, html_options={})
+-# .container-fluid
+-#   .col-sm-12
+-#     %h2 #{@app.name}
+-# .container-fluid
+-#   .col-sm-12
+-#     %h4 Load Balancers
+-#   .col-sm-12
+-#     - @app.load_balancers.each do |lb|
+-#       = link_to lb.name, "http://#{lb.url}"
+-# %hr
+-# .container-fluid
+-#   -# .col-sm-12
+-#   -#   .scale
+-#   -#     - @fleet.pods.order(:name).each do |p|
+-#   -#       - ["on_demand","spot"].each do |machine_type|
+
+-#   -#         = simple_form_for :pod_scale, url: app_pod_scale_path(@app,p),html: { class: 'form-horizontal' },
+-#   -# wrapper: :inline_form   do |f|
+-#   -#           .scale-form
+-#   -#             .col-sm-1
+-#   -#               = "#{machine_type} #{p.name} members".titleize
+-#   -#             .col-sm-1
+-#   -#               = f.input :new_amount, :as => :string, :input_html => {:value => machine_type == "on_demand" ? p.permanent_minimum : p.spot_amount , :maxlength => 3, :width => "20px",:style => "width: 70px;"}
+-#   -#               = f.input :machine_type, :as => :hidden,  :input_html => {:value => machine_type}
+-#   -#             .col-xs-2.col-sm-1
+-#   -#               = f.submit "Scale", :class => "btn btn-info""
+
+-#   - @fleet.pods.each do |pod|
+-#     .col-sm-12.pod-title
+-#       = pod.name
+-#     .row
+-#       .col-sm-3
+-#         = react_component("ScaleButton", {fleetID: @fleet.id,podID: pod.id, appName: @fleet.app.name, numberOfMachines: pod.permanent_minimum , machineType: "on_demand"}.to_json)
+-#       .col-sm-3
+-#         = react_component("ScaleButton", {fleetID: @fleet.id,podID: pod.id, appName: @fleet.app.name, numberOfMachines: pod.spot_amount , machineType: "spot"}.to_json)
+
+-# - @fleet.machines.each do |m|
+-#   = render :partial => "machines/machine", :locals => {:m => m}
+
+-#   -# .col-sm-12
+-#   -#   %h3 Build Machines
+-#   -# .machines
+-#   -#   - @fleet.pods.each do |pod|
+-#   -#     .machine.col-sm-12.col-md-4.col-lg-6
+-#   -#       .machine-name
+-#   -#         Build: #{pod.name}
+-#   -#       - if pod.builder
+-#   -#         .terminal-log{:id => "terminal-log-#{pod.builder.id}", "data-machine_id" => pod.builder.id}

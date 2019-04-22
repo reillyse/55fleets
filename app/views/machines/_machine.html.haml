@@ -1,0 +1,9 @@
+.remove
+  = react_component("Machine", { initialState: m.as_json(:include => [:subnet,:pod]) }, html_options={})
+
+  -# .hideshow
+  -#   = link_to(app_machine_log_path(@app,m), :method => :put, :remote => true) do
+  -#     %input{:class => "btn btn-small btn-info showhidebutton", value: "Show Logs"}
+  -#   %input{:type => 'button', :class => "showhidebutton initiallyHidden", value: "Hide Logs"}
+  -#   .content.initiallyHidden
+  -#     .terminal-log{:id => "terminal-log-#{m.id}", "data-machine_id" => m.id}

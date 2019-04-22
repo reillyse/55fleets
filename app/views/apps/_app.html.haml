@@ -1,0 +1,67 @@
+.container-fluid
+
+  .col-sm-12
+    %h1 #{@app.name} App
+  .col-sm-12
+    %h2 Load Balancers
+    - if @app.load_balancers.empty?
+      Creating Load Balancer...
+    - else
+      - @app.load_balancers.each do |lb|
+        = link_to lb.url_with_protocol  unless lb.url.blank?
+
+  .col-sm-12
+    = link_to "Configure ENV variables & Secrets", app_env_configs_path(@app)
+  .col-sm-12
+    = link_to "Configure SSL Certificates", app_certs_path(@app)
+  - if @app.repo
+    .col-sm-12
+      %h2 Repo
+      %h3 #{@app.repo.url}
+      #{link_to "Configure Webhooks" ,@app.repo,:class => Repo}
+
+  - if @app && @app.fleet_configs.last
+    .col-sm-6
+      = link_to "Launch", app_launch_fleet_config_path(@app,@app.fleet_configs.last), :class => "btn btn-large btn-info", :method => :post
+
+  - else
+    .col-sm-12
+      = link_to "Add Repo", new_repo_path(:app_id => @app.id), :class => "btn btn-info btn-medium"
+
+%hr
+.container-fluid
+  .col-sm-12
+    = link_to "View Fleet Configs", app_fleet_configs_path(@app), :class => "btn btn-info btn-medium"
+
+
+  .col-sm-12
+    = link_to "Create a Fleet Config", new_app_fleet_config_path(@app), :class => "btn btn-info btn-medium"
+
+
+
+  -# .col-sm-12
+  -#   %h3 Machines
+  -#   %table.table.table-striped.table-bordered
+  -#     = render :partial => "machine_row", :collection => @app.machines
+
+  .col-sm-12
+    %h3 Virtual Private Clouds
+    - if @app.vpcs.empty?
+      Creating...
+    - else
+      %table.table.table-striped.table-bordered
+        = render :partial => "vpc_row", :collection => @app.vpcs
+
+  - @subnets = @app.vpcs.map(&:subnets).flatten.to_a
+  .col-sm-12
+    %h3 Subnets
+    - if @subnets.empty?
+      Creating ....
+    - else
+      %table.table.table-striped.table-bordered
+        %thead
+          %th Name
+          %th Availability Zone
+          %th State
+        %tbody
+          = render :partial => "subnet_row", :collection => @subnets

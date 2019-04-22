@@ -1,0 +1,68 @@
+.container
+  .content-box
+    %h1 Getting Started
+    %p
+      In order to get setup you'll need a valid Docker file and a valid docker-compose file for each pod you want to build. Here is a sample docker-compose.yml file used to run this site with the two Dockerfiles referenced in it. This is enough to launch a Rails webserver with nginx sitting in front of it. These files should be in the root directory of your app.
+    %h2 docker-compose.yml
+    :plain
+      <pre><code>
+      version: '2'
+      services:
+        webserver:
+          build:
+            context: .
+            dockerfile: Dockerfile
+        nginx:
+          build:
+            context: .
+            dockerfile: Dockerfile.nginx
+          ports:
+            - "80:80"
+            - "443:443"
+          links:
+            - webserver
+    </code></pre>
+    
+  %h2 Dockerfile
+  %p
+    %pre
+      %code
+      FROM ruby:2.2
+
+      RUN bundle config --global frozen 1
+
+      RUN mkdir -p /usr/src/app
+      WORKDIR /usr/src/app
+
+      RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+      RUN apt-get update && apt-get install -y postgresql-client  --no-install-recommends && rm -rf /var/lib/apt/lists/*
+      RUN apt-get update && apt-get install -y rsyslog --no-install-recommends
+      RUN apt-get update && apt-get install -y yui-compressor --no-install-recommends  && rm -rf /var/lib/apt/lists/*
+
+
+      EXPOSE 3000
+
+      COPY Gemfile /usr/src/app/
+      COPY Gemfile.lock /usr/src/app/
+      RUN bundle install
+      COPY . /usr/src/app
+      CMD service rsyslog start  &&  bundle exec unicorn -p 3000 -E production -c ./config/unicorn.rb
+
+  
+  %h2 Dockerfile.nginx
+  %p
+    %pre
+      %code
+      FROM nginx
+      RUN apt-get update && apt-get install -y rsyslog --no-install-recommends
+      RUN rm -rf /etc/nginx/conf.d
+
+      COPY config/nginx.conf /etc/nginx/nginx.conf
+      
+  %h2 Next Steps
+  %p 
+    Commit your code and launch your app.
+
+  = link_to "Get Started  Now", apps_path, :class => "btn btn-large btn-info"
+
+    

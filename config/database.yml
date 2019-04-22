@@ -1,0 +1,36 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: flywheel_development
+  pool: 35
+  username:
+  password:
+  reaping_frequency: 60
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: flywheel_test
+  pool: 35
+  username:
+  password:
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: flywheel_production
+  pool: 24
+  password: <%= ENV["POSTGRES_PASS"] %>
+  host: <%= ENV["POSTGRES_HOST"] %>
+  username: <%= ENV["POSTGRES_USERNAME"] %>
+  reaping_frequency: 60
+
+staging:
+  adapter: postgresql
+  encoding: utf8
+  database: 55fleets_staging
+  pool: 20
+  password: <%= ENV["POSTGRES_PASS"] %>
+  host: <%= ENV["POSTGRES_HOST"] %>
+  username: <%= ENV["POSTGRES_USERNAME"] %>
+  reaping_frequency: 60

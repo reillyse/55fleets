@@ -1,0 +1,175 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+
+
+ */
+
+@import "fonts";
+
+@import "navigation";
+
+@import "utilities/variables";
+
+
+.alert {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+body {
+    font-family: $font-stack;
+
+    padding-bottom: 60px;
+    background-color: $background;
+    color: $primary-body;
+    padding-left: 0px;
+    padding-right: 0px;
+
+
+    line-height: 26px;
+    font-size: 18px;
+
+}
+
+#email-report-spinner {
+    display: none;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+
+
+
+
+
+h1,h2,h3,h4,h5,h6 {
+    color: $primary-body;
+    font-weight: 500;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+a {
+    color: $primary-heading;
+}
+
+a:hover  {
+    color: darken($accent-two,10%);
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: darken($background, 5%);
+
+ }
+
+.form-control {
+    background-color: lighten($background,1%);
+}
+
+p {
+    padding-top: 10px;
+    line-height: 26px;
+    font-size: 18px;
+    font-family: $font-stack;
+}
+
+.panel-body {
+
+    background-color:$primary-background;
+}
+
+
+
+
+.containernot {  height:600px}
+.initiallyHidden { display: none; }
+
+
+h { font-family: $font-stack-heading ;}
+
+.btn { text-transform: uppercase;}
+
+//no-repeat bottom center fixed ;
+.container-fluid.full-bleed {
+    padding: 0px;
+}
+.bleed-background {
+    height: 600px;
+    background-color: #ffffff ;
+    background-image: image-url("containers.jpg");
+
+    background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+
+//  height: 600px;
+  width: 100%;
+  .headline {
+            text-align: center;
+  h1 {
+      margin-top: 140px;
+      padding:0px;
+      text-align: center;
+      background-color: white;
+      display:inline-block;
+  }
+  }
+  .second-headline{
+            text-align: center;
+  h2 {
+      display:inline-block;
+      margin-top: 40px;
+      padding: 0px;
+      text-align: center;
+      background-color: white;}
+  }
+  .button-wrapper {
+      text-align:center;
+      .btn {
+	  margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+      }
+  }
+}
+
+.container-fluid {
+
+}
+
+.content-box {
+    margin-top: 40px;
+}

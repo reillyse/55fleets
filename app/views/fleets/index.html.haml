@@ -1,0 +1,24 @@
+.container-fluid
+  .col-sm-12.col.lg.12
+    .fleet-heading
+      %h2
+        #{@app.name.upcase}
+      .load-balancers
+      - @app.load_balancers.each do |lb|
+        .load-balancer
+          = link_to lb.url_with_protocol, "#{lb.url_with_protocol}"
+  .col-sm-12
+    .fleet-table
+      -# %thead
+      -#   %th
+      -#   %th.fleet-created-at
+      -#     LAUNCHED
+      -#   %th
+      -#     PODS
+      -#   %th
+      -#     MACHINES
+      -#   %th
+      -#     RUNNING
+        -# - @app.fleets.order(:created_at).reverse[0..5].each do |f|
+        -#   = react_component("Fleet", { initialState: f.for_react }, html_options={tag: "tbody"})
+      = react_component("App", {initialState: @app.for_react})

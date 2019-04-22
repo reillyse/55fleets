@@ -1,0 +1,8 @@
+.container-fluid
+  .col-sm-12
+    %H1 Add the dang repos
+    - @repos.each do |frepo|
+      .row
+        .repo-path
+          - name = frepo.full_name || frepo.name
+          = link_to "Add Repo #{name}", repos_path(:name => name , :app_id => @app_id) , :method => :post

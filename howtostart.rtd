@@ -1,0 +1,35 @@
+==getting started
+
+install postgres
+install mongo
+-- brew install mongo
+
+create db
+-- rake db:create
+-- rake db:migrate
+
+
+get your aws creds
+create a postgres RDS db
+
+
+create secrets
+secrets.env
+
+export GSG_KEY_SECRET=gsg-somekey
+
+  export BITBUCKET_APP_TOKEN=
+  export BITBUCKET_APP_SECRET=
+  export GITHUB_KEY=
+  export GITHUB_SECRET=
+  export REPO_KEY_SECRET=
+  export CERT_KEY_SECRET=cert_key_secret
+  export ENV_KEY_SECRET=somekey
+  export POSTGRES_HOST=
+  POSTGRES_PORT=5432
+  export POSTGRES_PASS=
+  export POSTGRES_USERNAME=awsuser
+  export AWS_SECRET_ACCESS_KEY=
+  export AWS_ACCESS_KEY_ID=
+  export DEVISE_SECRET_KEY=devise_key_secret
+  

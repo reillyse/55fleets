@@ -1,0 +1,5 @@
+FROM rails:onbuild
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get update && apt-get install -y rsyslog --no-install-recommends
+RUN bundle install
+CMD service rsyslog start && bundle exec rake db:migrate && bundle exec rake environment resque:scheduler

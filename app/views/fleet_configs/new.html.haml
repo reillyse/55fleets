@@ -1,0 +1,28 @@
+.container-fluid
+  .row
+    .col-md-6
+      %h1 Create A Fleet Config
+  .row
+    .col-md-6
+      = simple_form_for [@app,@fleet_config] do |f|
+
+        %h2 Pods
+        .pod-configs
+          = f.simple_fields_for :pod_configs, @fleet_config.pod_configs do |p|
+            .pod-config
+              = p.input :name, as: :string
+              = p.input :number_of_members, as: :string, :input_html => {:value => 1}
+              = p.input :permanent_minimum, ad: :string, label: "Permanent Number of Instances", :input_html => {:value => 1}
+              = p.input :before_hooks, :label => "Before Hooks: Commands to be run before we start the containers"
+              = p.input :compose_filename, :label => "The full name of the compose filename if it is not the default"
+              = p.input :after_hooks, :label => "After Hooks: Commands to be run after we start the containers"
+              = p.input :load_balanced, :label => "Add to the web load balancers"
+              = p.input :instance_size, :collection => PodConfig::INSTANCE_SIZES,:selected => :custom, :allow_blank => false
+              OR
+              = p.input :instance_type, :label => "Exact EC2 instance type", as: :string
+              = p.input :git_ref, :label => "Deploy a particular git commit"
+              %hr
+        .new-pod
+          = link_to "Add another Pod", "#", :class => "btn btn-info btn-medium", :id => "new-pod-button"
+
+        = f.submit "Create",:class => "btn btn-medium btn-danger"

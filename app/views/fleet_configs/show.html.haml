@@ -1,0 +1,47 @@
+.container-fluid
+  .row
+    .col-md-3
+      %h1 Fleet Config  
+  .row
+    .col-md-12
+      %h2 Pods
+      - @fleet_config.pod_configs.each do |pc|
+        .row
+          .col-md-2
+            %h3 #{pc.name}
+        .row
+          .col-md-1
+            %h4 Member Count
+            #{pc.number_of_members}
+        .row
+          .col-md-12
+            %h4 Build Command  
+            #{pc.build_command}
+        .row
+          .col-md-12
+            %h4 Compose Command
+            #{pc.compose_command}
+        .row
+          .col-md-12
+            %h4 Instance Size
+            #{pc.instance_size}
+        .row
+          .col-md-12
+            %h4 Before Hooks
+            #{pc.before_hooks}
+        .row
+          .col-md-12
+            %h4 After Hooks
+            #{pc.after_hooks}
+        .row
+          .col-md-12
+            %h4 Git Ref
+            #{pc.git_ref}
+            
+              
+  .row
+    .col-md-2
+      - if @app.configured?
+        = link_to "Launch", app_launch_fleet_config_path(@app,@fleet_config), :class => "btn btn-large btn-danger", :method => :post
+      - else
+        Launch not available yet, please wait for the application to be fully setup (we are adding the load balancer, VPC and subnets, please contact us if this takes longer than 1 minute)

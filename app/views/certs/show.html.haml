@@ -1,0 +1,7 @@
+%h1 SSL Certificate
+%h3 #{@cert.name}
+.jumbotron
+  #{@cert.certificate}
+= link_to "Show All", app_certs_path(@app,@cert),:class =>"btn btn-small"
+
+

@@ -1,0 +1,11 @@
+%h1 Your Certificates
+- @certs.each do |c|
+  .jumbotron
+    .cert
+      Cert Name: #{c.name}
+    .load_balancer
+      Load Balancers: #{c.load_balancers.map(&:name).join(",")}  
+
+= link_to "New Cert", new_app_cert_path(@app), :class => "btn btn-medium"
+= link_to "Attach Certs to Load Balancers", app_load_balancers_path(@app), :class => "btn btn-medium"    
+    

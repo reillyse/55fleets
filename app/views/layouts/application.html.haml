@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title 55Fleets
+    = favicon_link_tag "55Fleets.ico"
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    = render :partial => "layouts/navigation"
+    %p{hidden:true}
+      #{File.read(".git/refs/heads/master")}
+
+
+
+      -# .container-fluid
+      -#   .flash-messages
+      -#     = flash_messages

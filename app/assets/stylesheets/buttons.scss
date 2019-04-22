@@ -1,0 +1,424 @@
+@import "utilities/variables";
+
+
+
+.fleet-table {
+  border-collapse: separate;
+  //border-spacing: 60px 0px;
+
+  font-size: 20px;
+  font-weight: 400;
+  th {
+
+    font-weight: 400;
+    padding-right: 60px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: $lighter-body;
+
+  }
+
+  tr {
+    border-bottom: 1px solid $lighter-body;
+
+  }
+  td {
+    padding-right: 60px;
+    margin-right: 60px;
+    padding-bottom: 9px;
+    padding-top: 17px;
+    text-align: center;
+    border-bottom: 1px solid $lighter-body;
+  }
+
+  tr td:first-child {
+    text-align: left;
+  }
+
+}
+.btn, .btn-large, .btn-info, .standard-button {
+  font-size: 16px;
+  border: 1px solid;
+  color: $primary-accent-body;
+  border-color: $primary-accent-body;
+  background-color: inherit;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  border-radius: 4px;
+  -mox-border-radius: 4px;
+}
+
+.fleet-instance-count:hover {
+  background-color: #FCFCFC;
+}
+
+.fleet-instance-count {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 30px;
+  background-color: $background;
+  border-color: $primary-body;
+  color:  $lighter-body;
+  border: 2px solid;
+  border-radius: 4px;
+  width: 177px;
+  .count {
+    color:  $primary-body;
+    padding-top: 30px;
+    padding-bottom: 21px;
+    font-size: 32px;
+    padding-left: 26px;
+    padding-right: 10px;
+  }
+  .describe, top bottom{
+    display: inline-block;
+    height: 12px;
+    font-size: 12px;
+    line-height: 13px;
+    padding-right: 30px;
+    text-align: left;
+
+  }
+  span {
+    display: inline-block;
+  }
+  .fleet-created-at {
+    width: 760px;
+    text-align: left;
+  }
+
+}
+
+
+.scale-instances {
+  margin: 30px 30px 30px 0px;
+  background-color: $background;
+  border-color: $primary-body;
+  border: 2px solid $lighter-body;
+  border-radius: 4px;
+  width: 177px;
+  height: 81px;
+
+  .scale-button {
+    display: inline-block;
+    height: 31px;
+    font-size: 14px;
+    background-color: $button-color;
+    color: white;
+    border: 2px solid $button-color;
+    border-radius: 4px;
+    width: 77px;
+
+    line-height: 14px;
+    margin-left: 5px;
+    marign-top: 0px;
+    padding-top: 7px;
+    height: 30px;
+  }
+
+  .label {
+    padding-top: 10px;
+    font-size: 13px;
+    color:  $lighter-body;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 60px;
+    text-align: center;
+    border: 2px solid $lighter-body;
+    border-radius: 4px;
+    background-color: inherit;
+    margin-left: 14px;
+    height: 30px;
+  }
+
+}
+
+.btn {
+  border-color: $button-color;
+}
+.btn, .btn-large, .btn-info, .blue-button {
+  background-color: $button-color;
+  color: white;
+  border: 2px solid $button-color;
+  border-radius: 4px;
+
+  line-height: 14px;
+  margin-left: 5px;
+  marign-top: 0px;
+  display: inline-block;
+  height: 31px;
+  font-size: 14px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 7px;
+  padding-bottom: 19px;
+
+}
+
+.btn:hover, .btn-large:hover, .btn-info:hover, .blue-button:hover {
+                                                 background-color:$primary-background;
+                                                 color: $button-color;
+                                               }
+
+
+
+.machine-view {
+
+  margin: 30px;
+  margin-left: 0px;
+  border: 2px solid $lighter-body;
+  border-radius: 4px;
+
+  width: 730px;
+  height: 310px;
+
+  .heading {
+
+    padding-top: 14px;
+    padding-left: 25px;
+    border-bottom: 2px solid $lighter-body;
+    height: 60px;
+    .pod-name {
+      font-size: 20px;
+
+      display: inline-block;
+    }
+    .logs-button {
+    }
+  }
+
+  .btn, .btn-large, .btn-info, .blue-button {
+    margin: 13px;
+    margin-left: 21px;
+
+  }
+
+
+}
+
+.machine-details {
+  font-weight: 700px;
+  color: $heavier-body;
+  font-size: 16px;
+  padding-left: 25px;
+  height: 190px;
+  border-bottom: 2px solid $lighter-body;
+  line-height: 16px;
+  table {
+    border-collapse: separate;
+    border-spacing: 0px 18px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    text-align: left;
+    border-bottom: 0px;
+    td {
+      padding-right: 25px;
+      border-bottom: 0px;
+      margin-bottom: 0px;
+      text-align: left;
+      padding-bottom: 0px;
+      padding-top: 0px;
+    }
+    td:first-child {
+      color: $lighter-body;
+
+    }
+  }
+
+}
+.fleet-heading {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-size: 20px;
+
+}
+
+.inverted-button {
+
+  background-color: white;
+  color:  $button-color;
+
+}
+
+.inverted-button:hover {
+  background-color: $primary-accent-body;
+  color: $primary-background;
+}
+
+
+.indicator {
+  margin-left: 14px;
+  margin-right: 14px;
+
+
+}
+.status-indicator {
+  font-size: 13px;
+  text-transform: uppercase;
+  float: right;
+  display: inline-block;
+  padding-top: 4px;
+
+  .created {
+    display: inline-block;
+    color: $starting ;
+
+
+  }
+  .terminated {
+
+
+    display: inline-block;
+    color: $terminated;
+  }
+  .starting {
+    display: inline-block;
+    color: $starting;
+
+  }
+  .running {
+
+
+    color: $running;
+    display: inline-block;
+  }
+  .created-circle {
+    background-color: $starting;
+  }
+  .terminated-circle {
+    background-color: $terminated;
+  }
+  .starting-circle {
+    background-color: $starting;
+  }
+  .running-circle{
+    background-color: $running}
+}
+
+
+.circle {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right :10px;
+}
+
+
+.log-terminal {
+  margin-top: -31px;
+  margin-left: 0px;
+  margin-bottom: 50px;
+  font-family: $terminal-font;
+  width: 100%;
+  height: 600px;
+  background-color: black;
+  color: #E3E3E3;
+  padding: 21px;
+  font-size: 11px;
+  overflow: auto;
+  line-height: 1.2em;
+
+  .stderr {
+    color: red;
+  }
+
+  .logline {
+    line-height: 1.2em;
+  }
+}
+
+.pen {
+  content:"\f040";
+}
+
+.can-edit {
+
+  .describe {
+    padding-right: 0px;
+    margin-right: 0px;
+  }
+  .pencil-edit {
+    font-size: 18px;
+    color: $primary-body;
+    margin-left: 4px;
+  }
+
+
+}
+
+.hidden {
+  display: none;
+}
+
+
+.pod-title {
+  margin-top: 20px;
+  text-transform: uppercase;
+}
+
+.scale-wrapper {
+  display: inline-block;
+}
+
+.outer-scale-wrapper {
+
+  display: block;
+}
+
+.fleet-scale {
+  margin-top: 30px;
+}
+.scale-pod-name {
+
+}
+
+
+.show-hide-fleet {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.btn, .btn-large, .btn-info {
+  margin-left: 0px;
+  margin-bottom: 20px;
+}
+
+
+/* Let's get this party started */
+.log-terminal::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+.log-terminal::-webkit-scrollbar-track {
+  //-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+}
+
+/* Handle */
+.log-terminal::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+  background: $menu-color;
+
+}
+
+.revert-fleet-button {
+  margin-bottom: 10px;
+}
+.view-fleet-button {
+
+
+}
+.build-wrapper {
+  margin-bottom: 10px;
+  margin-top:10px;
+}

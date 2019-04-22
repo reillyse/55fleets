@@ -1,0 +1,13 @@
+- @log_entries.each do |log_entry|
+  - if !log_entry.stdout.blank?
+    - clean_ansii(log_entry.stdout).each do |le|
+      .row
+        .stdout
+          #{log_entry.created_at.strftime("%Y-%m-%dT%l:%M:%S%z")} #{le}
+  - if !log_entry.stderr.blank?
+    - clean_ansii(log_entry.stderr).each do |le|
+      .row
+        .stderr
+          #{log_entry.created_at.strftime("%Y-%m-%dT%l:%M:%S%z")} #{le}
+:javascript
+  $("#terminal-log-#{machine.id}").data("last_log_timestamp","#{@last_log}");

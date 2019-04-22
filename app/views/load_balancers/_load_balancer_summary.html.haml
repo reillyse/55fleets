@@ -1,0 +1,1 @@
+#{load_balancer_summary.name}, #{load_balancer_summary.state}, #{link_to load_balancer_summary.url,"https://#{load_balancer_summary.url}"}, #{load_balancer_summary.certs.map(&:name).join(",")}, #{link_to "Add/Change Certificate", app_load_balancer_list_certificates_path(@app,load_balancer_summary)}

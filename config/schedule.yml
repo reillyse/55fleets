@@ -1,0 +1,54 @@
+instance_monitor:
+  every:
+    - "30s"
+  class: InstanceMonitor
+  queue: low
+  description: "This job will check the monitor every 30 seconds"
+
+fleet_checker:
+  every:
+    - "30s"
+  class: FleetChecker
+  queue: low
+  description: "This job will check the monitor every 30 seconds"
+
+fleet_flipper_sched:
+  cron: "1 1 * * * America/Los_Angeles"
+  class: FleetFlipperScheduler
+  queue: low
+  description: "We flip the fleet every night"
+
+machine_updater:
+  every:
+    - "30s"
+  class: MachineMonitor
+  queue: low
+  description: "Updates all the machines from whats happening on Amazon"
+
+build_maint_worker:
+  every:
+    - "30s"
+  class: BuildMachineMaintWorker
+  queue: low
+  description: "Clean up any builds that have taken too long"
+
+scale_back_builders_worker:
+  every:
+    - "4m"
+  class: ScaleBackBuildersWorker
+  queue: low
+  description: "Scale back the build machines if they aren't being used"
+
+cleanup_amis:
+  every:
+    - "1w"
+  class: AmiCleanupWorker
+  queue: low
+  description: "Cleanup unused Images and Snapshots"
+
+log_cleanup:
+  every:
+    - "1d"
+  class: LogCleanup
+  queue: low
+  description: "Clean up old mongo log entries"
