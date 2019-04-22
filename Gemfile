@@ -3,7 +3,7 @@ source "http://rubygems.org"
 
 gem "powder"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.11.1'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 gem "mongoid",  "~> 5.0.0"
