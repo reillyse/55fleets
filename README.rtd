@@ -1,4 +1,4 @@
-= getting started
+Getting Started Locally
 
 install postgres
 install mongo
@@ -14,10 +14,11 @@ create a postgres RDS db
 
 
 create secrets
-secrets.env
+When deploying locally you should use a secrets file.
 
-export GSG_KEY_SECRET=gsg-somekey
+vi secrets.env
 
+  export GSG_KEY_SECRET=
   export BITBUCKET_APP_TOKEN=
   export BITBUCKET_APP_SECRET=
   export GITHUB_KEY=
@@ -28,7 +29,7 @@ export GSG_KEY_SECRET=gsg-somekey
   export POSTGRES_HOST=
   POSTGRES_PORT=5432
   export POSTGRES_PASS=
-  export POSTGRES_USERNAME=awsuser
+  export POSTGRES_USERNAME=
   export AWS_SECRET_ACCESS_KEY=
   export AWS_ACCESS_KEY_ID=
   export DEVISE_SECRET_KEY=devise_key_secret
