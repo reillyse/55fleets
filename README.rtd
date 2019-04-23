@@ -12,9 +12,11 @@ create db
 get your aws creds
 create a postgres RDS db
 
+You'll need either a bitbucket API token / key and/or a Github API/ token key in order to deploy your code
 
 create secrets
 When deploying locally you should use a secrets file.
+
 
 vi secrets.env
 
