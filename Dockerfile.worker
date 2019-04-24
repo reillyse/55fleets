@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y yui-compressor --no-install-recommends 
 RUN echo "*.*          @logs3.papertrailapp.com:16615" >> /etc/rsyslog.conf
 
 
-EXPOSE 3000
+#EXPOSE 3000
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
@@ -25,5 +25,6 @@ COPY . /usr/src/app
 ADD ./docker/sidekiq/run_sidekiq.sh ./run_sidekiq.sh
 RUN chmod o+x run_sidekiq.sh
 RUN mkdir -p tmp/pids
+RUN mkdir -p log
 RUN touch log/sidekiq.log
 CMD ["./run_sidekiq.sh"]
