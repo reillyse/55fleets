@@ -6,9 +6,19 @@ class ImageBuilder < ActiveJob::Base
   ending_state   :built
   class_name :pod
 
+  def check_build_machines
+    if !App.build_system
+      App.create_build_system
+      return false
+    end
+    return true
+  end
+
   def mutate pod
 
+
     begin
+      raise "creating build pod" unless check_build_machines
       Timeout::timeout(ENV["BUILD_TIMEOUT"] || 1200) do
 
         repo  = pod.repo

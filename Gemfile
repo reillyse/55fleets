@@ -11,7 +11,7 @@ gem "mongoid-autoinc", '~> 5.0.0'
 
 
 
-gem "react-rails"
+gem "react-rails", "1.5.0"
 
 gem 'rack-ssl-enforcer'
 
@@ -29,7 +29,7 @@ gem "net-ssh"
 gem "net-scp"
 
 gem "ar_after_transaction"
-gem 'rollbar', '~> 2.5.0'
+
 gem 'actionpack-action_caching'
 
 
@@ -53,6 +53,7 @@ gem 'rb-readline'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem "coffee-rails"
 # Use Uglifier as compressor for JavaScript assets
 #gem 'uglifier', '>= 3.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -61,8 +62,9 @@ gem 'sass-rails', '~> 5.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem "attr_encrypted"
+gem "encryptor", "1.3.0"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', "2.5.3"
 gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

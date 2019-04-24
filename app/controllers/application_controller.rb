@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   before_filter :find_app
-  
+
   def keep_alive
     render :text => :ok, :status => :ok
   end
   private
-  
+
   def find_app
     Rails.logger.debug "looking for an app called #{params[:app_id]}"
     @app = current_user.apps.friendly.find(params[:app_id])
@@ -20,6 +20,6 @@ class ApplicationController < ActionController::Base
   rescue_from NotAllowed do |exception|
     render text: "This user does not have permission to access this resource", status: 401
     puts exception.message
-    Rollbar.report_exception exception
+
   end
 end

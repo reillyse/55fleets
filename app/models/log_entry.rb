@@ -29,7 +29,6 @@ class LogEntry
     begin
       LogEntry.create! params
     rescue => e
-      Rollbar.report_exception e
       puts e.message
       logger.error e.message
     end

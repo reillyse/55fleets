@@ -10,7 +10,7 @@ module RealTimeLogger
 
     rescue => e
       logger.error e.message
-      Rollbar.report_exception e
+
     end
   end
 
