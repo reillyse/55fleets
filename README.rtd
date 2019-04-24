@@ -1,16 +1,18 @@
 Getting Started Locally
 
 install postgres
-install mongo
--- brew install mongo
+install redis (for jobs)
+install mongo (for logging)
 
 create db
 -- rake db:create
 -- rake db:migrate
 
 
-get your aws creds
-create a postgres RDS db
+get your AWS creds
+
+Amazon RDS postgres database works wonders
+You can create a REDIS DB too on AWS (although there are plenty of free options, which are sufficient for getting started)
 
 You'll need either a bitbucket API token / key and/or a Github API/ token key in order to deploy your code. This is so that you
 can log in and access your repos and set up web hooks and deploy keys to download the code.
