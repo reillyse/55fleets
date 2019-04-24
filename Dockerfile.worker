@@ -1,5 +1,27 @@
-FROM bishbashbox/base-rails
-#RUN apt-get clean && apt-get update && apt-get install -y upstart --no-install-recommends && rm -rf /var/lib/apt/lists/*
+#FROM bishbashbox/base-rails
+FROM ruby:2.5.5
+
+
+RUN bundle config --global frozen 1
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y postgresql-client  --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y rsyslog --no-install-recommends
+RUN apt-get update && apt-get install -y yui-compressor --no-install-recommends  && rm -rf /var/lib/apt/lists/*
+RUN echo "*.*          @logs3.papertrailapp.com:16615" >> /etc/rsyslog.conf
+
+
+EXPOSE 3000
+
+COPY Gemfile /usr/src/app/
+COPY Gemfile.lock /usr/src/app/
+RUN bundle install
+COPY . /usr/src/app
+
+RUN apt-get clean && apt-get update && apt-get install -y upstart --no-install-recommends && rm -rf /var/lib/apt/lists/*
 ADD ./docker/sidekiq/run_sidekiq.sh ./run_sidekiq.sh
 RUN chmod o+x run_sidekiq.sh
 RUN mkdir -p tmp/pids
