@@ -42,3 +42,9 @@ vi secrets.env
 Generate keys for gsg_secret_key, repo_key_secret, cert_key_secret, somekey, devise_key_secret
 
 The other keys will need to come from the relevant services.
+
+
+============
+
+This codebase is a good example of how to prepare your codebase for deployment. You need a Dockerfile for each service in a pod and
+a docker-compose file for each pod. You can have multiple pods in a deployment, each defined by a docker-compose file. 
