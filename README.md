@@ -6,6 +6,9 @@
 - Create the DB
   - rake db:create
   - rake db:migrate
+- Run the webserver (pow is recommended)
+- Run sidekiq
+  - source secrets && bundle exec sidekiq
 
 # Set up 55fleets in production
 
