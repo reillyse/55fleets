@@ -6,7 +6,7 @@
 - Create the DB
   - rake db:create
   - rake db:migrate
-- Run the webserver (pow is recommended)
+- Run the webserver (using pow is recommended)
 - Run sidekiq
   - source secrets && bundle exec sidekiq
 
