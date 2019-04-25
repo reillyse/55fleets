@@ -7,20 +7,21 @@
   - rake db:create
   - rake db:migrate
 
+# Set up 55fleets in production
 
-# Get your AWS creds
+You'll need production databases to connect 55fleets to. We recommend Amazon 
+RDS Postgres or Redis on AWS (there are plenty of free options, which are sufficient
+for getting started).
 
-Amazon RDS postgres database works wonders. You can create a Redis DB too on AWS (although there are plenty of free options, which are sufficient for getting started).
-
-You'll need either a Bitbucket API key or a Github API key in order to deploy your code. This is so that you can log in and access your repos and set up web hooks and deploy keys to download the code.
-
-# Create secrets
+You'll need either a Bitbucket API key or a Github API key in order to deploy
+your code. This is so that you can log in and access your repos and set up 
+webhooks and deploy keys to download the code.
 
 When deploying locally you should use a secrets file.
 
-vi secrets.env
 
 ```
+cat secrets.env
 export GSG_KEY_SECRET=gsg_secret_key
 export BITBUCKET_APP_TOKEN=
 export BITBUCKET_APP_SECRET=
