@@ -12,6 +12,7 @@ class App < ActiveRecord::Base
   has_many :load_balancers
   has_many :certs
   has_many :ssh_keys
+  belongs_to :user
 
   def init_deploy_key
     SshKey.find_or_create_by_name_and_app(SshKey.deploy_key_name(self),self)

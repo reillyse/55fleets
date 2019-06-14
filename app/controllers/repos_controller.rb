@@ -1,7 +1,7 @@
 class ReposController  < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :find_app
-  
+
   def index
     @repos = current_user.repos
   end
@@ -11,7 +11,7 @@ class ReposController  < ApplicationController
 
       @repos = current_user.bb.repos.list
     elsif current_user.provider == "github"
-      @repos = current_user.github.repos
+      @repos = current_user.github.repos # this should work for the current logged in user"reillyse"
     else
       raise "no git provider"
     end

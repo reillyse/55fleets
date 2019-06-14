@@ -1,18 +1,18 @@
 class User < ActiveRecord::Base
-  
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   devise :omniauthable, :omniauth_providers => [:bitbucket,:github]
-  
+
   has_many :apps
   has_many :repos
   has_many :certs
   has_many :fleets, :through => :apps
 
-  validates_uniqueness_of :email
+  validates_uniqueness_of :email, :scope => :provider
 
 
   def self.from_omniauth_bitbucket auth
@@ -38,11 +38,12 @@ class User < ActiveRecord::Base
   end
 
   def bb
-    @bitbucket ||= BitBucket.new :oauth_token => self.oauth_token, :oauth_secret => self.oauth_secret    
+    @bitbucket ||= BitBucket.new :oauth_token => self.oauth_token, :oauth_secret => self.oauth_secret
   end
 
   def github
-    @client ||= Octokit::Client.new(:access_token => self.oauth_token)
+    #   @client ||= Octokit::Client.new(:access_token => self.oauth_token)
+    @client ||= Octokit::Client.new(:client_id => ENV["GITHUB_KEY"], :client_secret => ENV["GITHUB_SECRET"])
   end
 
 end

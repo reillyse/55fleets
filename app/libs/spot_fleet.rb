@@ -5,6 +5,23 @@ class SpotFleet
     @client ||= Aws::EC2::Client.new
   end
 
+  def check_request spot_fleet_request_id
+    return client.describe_spot_fleet_requests({ :spot_fleet_request_ids =>  [ spot_fleet_request_id ] } )
+  end
+
+  def get_history spot_fleet_request_id, since_time=nil
+
+    if since_time
+      since_time = since_time.to_time
+    else
+      since_time = Time.parse("2015-05-26T00:00:00Z")
+    end
+
+    return client.describe_spot_fleet_request_history({ :spot_fleet_request_id =>  spot_fleet_request_id , start_time:  since_time} )
+  end
+
+
+
   def create_fleet_request client_token,target_capacity,pod,subnets,instance_types = "r5.large, m5.large, c4.large, c5.large",spot_price = "0.1",allocation_strategy = "diversified"
 
 

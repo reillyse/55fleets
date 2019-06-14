@@ -1,1 +1,1 @@
- Octokit.auto_paginate = true
+Octokit.auto_paginate = true

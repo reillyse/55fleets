@@ -184,4 +184,25 @@ class SpotFleetRequest < ActiveRecord::Base
 
   end
 
+
+  def check_status_of_request
+    resp = SpotFleet.new.check_request self.spot_fleet_request_id
+
+  end
+
+  def get_history since_time
+    resp = SpotFleet.new.get_history self.spot_fleet_request_id, since_time
+  end
+
+  def aws_history
+    since_time = self.last_history_check
+
+    history = get_history(since_time).history_records.map {|h|   h.event_information.event_description }
+    history.each do |h|
+      LogEntry.create! :stdout => "AWS:- " + h , :machine_id => pod.builder.id,:pod_id => pod.id ,:stage => "aws info:"
+    end
+    self.last_history_check = Time.now
+    save!
+
+  end
 end

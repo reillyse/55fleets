@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190413040925) do
+ActiveRecord::Schema.define(version: 20190614223643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,18 +233,18 @@ ActiveRecord::Schema.define(version: 20190413040925) do
     t.integer  "instance_count"
     t.integer  "pod_id"
     t.text     "instance_types"
+    t.datetime "last_history_check"
   end
 
   create_table "ssh_keys", force: :cascade do |t|
     t.integer  "app_id"
-    t.text     "user_id"
-    t.text     "public_key"
+    t.integer  "user_id"
+    t.integer  "public_key"
     t.boolean  "active"
-    t.text     "encrypted_private_key"
-    t.text     "encrypted_private_key_iv"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.text     "name"
+    t.text     "encrypted_private_key"
   end
 
   create_table "subnets", force: :cascade do |t|

@@ -15,6 +15,7 @@ class InstanceMonitor
           s.with_lock('FOR UPDATE NOWAIT') do
             next unless s.state == "submitted" || s.state.blank?
             s.update_my_fleet
+            s.aws_history
           end
           Rails.logger.debug "releasing lock on sfr #{s.id}"
         end
