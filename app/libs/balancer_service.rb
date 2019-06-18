@@ -190,6 +190,9 @@ class BalancerService
                                                       # })
                                                     }).first.load_balancers.first
 
+    lb.arn = load_balancer.load_balancer_arn
+    lb.save!
+    lb.running!
 
     target_group  = elb_client.create_target_group({
                                         name: "targets-#{lb.name}"[-30..-1],
@@ -219,12 +222,10 @@ class BalancerService
       Rails.logger.debug "#----------------------------------------------------------------------------------------------------"
       Rails.logger.debug load_balancer.inspect
       Rails.logger.debug load_balancer.load_balancer_arn.inspect
-      lb.arn = load_balancer.load_balancer_arn
-      lb.save!
 
 
 
-    lb.running!
+
     return lb
   end
 
