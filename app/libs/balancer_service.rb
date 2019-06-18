@@ -192,7 +192,7 @@ class BalancerService
 
 
     target_group  = elb_client.create_target_group({
-                                        name: "my-targets-#{lb.name}",
+                                        name: "targets-#{lb.name}"[-30..-1],
                                         port: 80,
                                         protocol: "HTTP",
                                         vpc_id: vpc.vpc_id,
