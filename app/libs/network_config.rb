@@ -144,7 +144,11 @@ class NetworkConfig
     @load_balancer = @lb_client.describe_load_balancers({load_balancer_arns: [load_balancer_arn] } ).load_balancers.first
     seg_id = @load_balancer.security_groups.first
     @sec = Aws::EC2::SecurityGroup.new :id => seg_id
-    @sec.authorize_ingress  :cidr_ip =>  "0.0.0.0/0", :ip_protocol => "-1", :from_port => "0", :to_port => "65535"
+    begin
+      @sec.authorize_ingress  :cidr_ip =>  "0.0.0.0/0", :ip_protocol => "-1", :from_port => "0", :to_port => "65535"
+    rescue Aws::EC2::Errors::InvalidPermissionDuplicate => e
+      Rails.logger.info e.message
+    end
   end
 
 

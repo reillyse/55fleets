@@ -24,6 +24,9 @@ class SpotFleet
 
   def create_fleet_request client_token,target_capacity,pod,subnets,instance_types = "r5.large, m5.large, c4.large, c5.large",spot_price = "0.1",allocation_strategy = "diversified"
 
+    Rails.logger.debug "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    Rails.logger.debug instance_types
+    Rails.logger.debug subnets.inspect
 
     #iam_fleet_role = "arn:aws:iam::547832388282:role/spot-fleet-role"
     iam_fleet_role = Roles.new.find_or_create_spot_fleet_role.arn
@@ -46,7 +49,7 @@ class SpotFleet
       end
 
     }
-
+    Rails.logger.debug launch_configs.inspect
     Rails.logger.debug iam_fleet_role
     Rails.logger.debug "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 

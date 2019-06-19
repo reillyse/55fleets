@@ -2,7 +2,7 @@ require "aws-sdk-core"
 
 class BalancerService
 
-  def register_instance machine_id, subnet_id =nil, elb_names
+  def register_instance machine_id, subnet_id =nil, elb_arns
 
     machine = Machine.find machine_id
 
@@ -11,11 +11,11 @@ class BalancerService
 
 
 
-    elb_names.split(",").each {|elb_name|
+    elb_arns.split(",").each {|elb_arn|
 
       target_group_arn = elb.describe_target_groups
       resp = elb.describe_target_groups({
-                                          load_balancer_arn: elb_name
+                                          load_balancer_arn: elb_arn
                                         })
       target_group_arn = resp.target_groups[0].target_group_arn
 
@@ -30,7 +30,7 @@ class BalancerService
                              ]
                            })
 
-      machine.load_balancers << LoadBalancer.find_by_name(elb_name)
+      machine.load_balancers << LoadBalancer.find_by_arn(elb_arn)
       machine.save!
     }
 
@@ -63,6 +63,7 @@ class BalancerService
 
     Parallel.each(names, in_threads: names.count, progress: "Registering with Load Balancer"){ |elb_name|
       target_group_arn = get_first_target_group_from_elb_name elb_name
+      Rails.logger.debug "Waiting for target in service"
 
       elb.wait_until(:target_in_service,
                      {
@@ -72,6 +73,8 @@ class BalancerService
                      })
 
     }
+    Rails.logger.debug "Registered with load balancer"
+
 
     elb_names.split(",").each { |elb_name|
 
@@ -217,6 +220,17 @@ class BalancerService
                                load_balancer_arn: load_balancer.load_balancer_arn,
                                port: 80,
                                protocol: "HTTP",
+                                 })
+      elb_client.create_listener({
+                                   default_actions: [
+                                     {
+                                       target_group_arn: target_group.target_group_arn,
+                                       type: "forward",
+                                     },
+                                   ],
+                                   load_balancer_arn: load_balancer.load_balancer_arn,
+                                   port: 443,
+                                   protocol: "HTTPS",
                                  })
 
       Rails.logger.debug "#----------------------------------------------------------------------------------------------------"

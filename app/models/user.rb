@@ -43,7 +43,9 @@ class User < ActiveRecord::Base
 
   def github
     #   @client ||= Octokit::Client.new(:access_token => self.oauth_token)
-    @client ||= Octokit::Client.new(:client_id => ENV["GITHUB_KEY"], :client_secret => ENV["GITHUB_SECRET"])
+    #@client ||= Octokit::Client.new(:client_id => ENV["GITHUB_KEY"], :client_secret => ENV["GITHUB_SECRET"])
+
+     Octokit::Client.new(:access_token => self.oauth_token)
   end
 
 end
