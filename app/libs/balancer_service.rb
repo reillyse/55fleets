@@ -44,7 +44,7 @@ class BalancerService
     @elb_client ||= Aws::ElasticLoadBalancingV2::Client.new
   end
 
-  def rolling_deploy(machines,elb_names)
+  def rolling_deploy(machines,elb_arns)
 
 
     # add the instance
@@ -54,15 +54,15 @@ class BalancerService
 
     machines.each { |m|
 
-      BalancerService.new.register_instance m.id,nil,elb_names
+      BalancerService.new.register_instance m.id,nil,elb_arns
     }
 
-    names = elb_names.split(",")
+    arns = elb_arns.split(",")
 
 
 
-    Parallel.each(names, in_threads: names.count, progress: "Registering with Load Balancer"){ |elb_name|
-      target_group_arn = get_first_target_group_from_elb_name elb_name
+    Parallel.each(arns, in_threads: names.count, progress: "Registering with Load Balancer"){ |elb_arn|
+      target_group_arn = get_first_target_group_from_elb_arn elb_arn
       Rails.logger.debug "Waiting for target in service"
 
       elb.wait_until(:target_in_service,
@@ -76,10 +76,10 @@ class BalancerService
     Rails.logger.debug "Registered with load balancer"
 
 
-    elb_names.split(",").each { |elb_name|
+    elb_arns.split(",").each { |elb_arn|
 
 
-      registered_instance_ids  = get_instance_ids_from_elb_name elb_name
+      registered_instance_ids  = get_instance_ids_from_elb_arn elb_arn
 
       registered_instance_ids = registered_instance_ids.uniq - machines.map(&:instance_id)
 
@@ -88,7 +88,7 @@ class BalancerService
 
         registered_instance_ids.each { |i_id|
 
-          deregister_instance i_id, elb_name
+          deregister_instance i_id, elb_arn
 
         }
 
@@ -104,7 +104,7 @@ class BalancerService
     }
   end
 
-  def deregister_instance(i_id, elb_name)
+  def deregister_instance(i_id, elb_arn)
 
     m = Machine.find_by_instance_id i_id
     unless m.fleet.deregistered
@@ -114,7 +114,7 @@ class BalancerService
 
 
 
-    target_group_arn = get_first_target_group_from_elb_name elb_name
+    target_group_arn = get_first_target_group_from_elb_arn elb_arn
     from_elb = elb_client.deregister_targets({
                                         target_group_arn: target_group_arn,
                                         targets: [
@@ -123,8 +123,8 @@ class BalancerService
                                           },] })
   end
 
-  def get_targets_from_elb_name elb_name
-    target_group_arn = get_first_target_group_from_elb_name elb_name
+  def get_targets_from_elb_arn elb_arn
+    target_group_arn = get_first_target_group_from_elb_arn elb_arn
     resp = elb_client.describe_target_health({
                                                target_group_arn: target_group_arn,
                                              })
@@ -132,15 +132,15 @@ class BalancerService
 
   end
 
-  def get_instance_ids_from_elb_name elb_name
-    targets = get_targets_from_elb_name(elb_name)
+  def get_instance_ids_from_elb_arn elb_arn
+    targets = get_targets_from_elb_arn(elb_arn)
     return targets.to_h[:target_health_descriptions].map{|s| s[:target][:id]}
   end
 
-  def get_first_target_group_from_elb_name elb_name
+  def get_first_target_group_from_elb_arn elb_arn
 
     resp = elb_client.describe_target_groups({
-                                               load_balancer_arn: elb_name
+                                               load_balancer_arn: elb_arn
                                              })
     target_group_arn = resp.target_groups[0].target_group_arn
 
@@ -180,7 +180,7 @@ class BalancerService
     lb.starting!
 
     load_balancer = elb_client.create_load_balancer({
-                                                      name: elb_name, # required
+                                                      name: elb_arn, # required
                                                       #, availability_zones: ["AvailabilityZone"],
                                                       subnets: subnets.map(&:subnet_id)
                                                       #   security_groups: ["SecurityGroupId"],

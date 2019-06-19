@@ -43,7 +43,7 @@ class LoadBalancer < ActiveRecord::Base
   end
 
   def add_machine machine
-    BalancerService.new.register_instance machine.id,nil,self.name
+    BalancerService.new.register_instance machine.id,nil,self.arn
   end
 
   def update_certs
