@@ -180,7 +180,7 @@ class BalancerService
     lb.starting!
 
     load_balancer = elb_client.create_load_balancer({
-                                                      name: elb_arn, # required
+                                                      name: elb_name, # required
                                                       #, availability_zones: ["AvailabilityZone"],
                                                       subnets: subnets.map(&:subnet_id)
                                                       #   security_groups: ["SecurityGroupId"],
