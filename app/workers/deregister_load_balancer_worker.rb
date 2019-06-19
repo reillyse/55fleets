@@ -5,7 +5,7 @@ class DeregisterLoadBalancerWorker < ActiveJob::Base
   def perform machine_id
     @machine = Machine.find machine_id
     @machine.load_balancers.each do |elb|
-      BalancerService.new.deregister_instance @machine.instance_id,elb.name
+      BalancerService.new.deregister_instance @machine.instance_id,elb.arn
     end
   end
 end
