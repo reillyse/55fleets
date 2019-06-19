@@ -15,4 +15,24 @@ class CertificateService
     puts resp.inspect
     return resp.server_certificate_metadata.arn
   end
+
+
+  # def create_certificate
+  #   resp = client.request_certificate({
+  #                                       domain_name: "DomainNameString", # required
+  #                                       validation_method: "EMAIL", # accepts EMAIL, DNS
+  #                                       subject_alternative_names: ["DomainNameString"],
+  #                                       idempotency_token: "IdempotencyToken",
+  #                                       domain_validation_options: [
+  #                                         {
+  #                                           domain_name: "DomainNameString", # required
+  #                                           validation_domain: "DomainNameString", # required
+  #                                         },
+  #                                       ],
+  #                                       options: {
+  #                                         certificate_transparency_logging_preference: "ENABLED", # accepts ENABLED, DISABLED
+  #                                       },
+  #                                       certificate_authority_arn: "Arn",
+  #                                     })
+  # end
 end

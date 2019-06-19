@@ -198,7 +198,7 @@ class BalancerService
     lb.running!
 
     target_group  = elb_client.create_target_group({
-                                        name: "targets-#{lb.name}"[-30..-1],
+                                        name: "targets-#{lb.name}"[0..30],
                                         port: 80,
                                         protocol: "HTTP",
                                         vpc_id: vpc.vpc_id,
@@ -221,17 +221,19 @@ class BalancerService
                                port: 80,
                                protocol: "HTTP",
                                  })
-      elb_client.create_listener({
-                                   default_actions: [
-                                     {
-                                       target_group_arn: target_group.target_group_arn,
-                                       type: "forward",
-                                     },
-                                   ],
-                                   load_balancer_arn: load_balancer.load_balancer_arn,
-                                   port: 443,
-                                   protocol: "HTTPS",
-                                 })
+
+      ## need an ssl cert for a https listener, this will need to be done manually
+      # elb_client.create_listener({
+      #                              default_actions: [
+      #                                {
+      #                                  target_group_arn: target_group.target_group_arn,
+      #                                  type: "forward",
+      #                                },
+      #                              ],
+      #                              load_balancer_arn: load_balancer.load_balancer_arn,
+      #                              port: 443,
+      #                              protocol: "HTTPS",
+      #                            })
 
       Rails.logger.debug "#----------------------------------------------------------------------------------------------------"
       Rails.logger.debug load_balancer.inspect
