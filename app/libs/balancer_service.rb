@@ -61,7 +61,7 @@ class BalancerService
 
 
 
-    Parallel.each(arns, in_threads: names.count, progress: "Registering with Load Balancer"){ |elb_arn|
+    Parallel.each(arns, in_threads: arns.count, progress: "Registering with Load Balancer"){ |elb_arn|
       target_group_arn = get_first_target_group_from_elb_arn elb_arn
       Rails.logger.debug "Waiting for target in service"
 
