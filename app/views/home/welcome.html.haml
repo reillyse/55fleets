@@ -7,16 +7,16 @@
             %h1 Deploy Your Docker Applications in Minutes
           .second-headline
             %h2 Enjoy the power of docker with the ease of automatic deployment and scaling
-          .button-wrapper 
-            = link_to "Deploy Your Apps Now", apps_path, :class => "btn btn-large btn-info"
+          .button-wrapper
+            = link_to "Deploy Your Apps Now", "https://github.com/reillyse/55fleets", :class => "btn btn-large btn-info"
 .container
   .content-box
     %p
       55Fleets is a platform as a service (PAAS) built on top of docker and AWS for developers and dev-ops who are moving fast. It provides all the features required to deploy and mantain an application including webhook based deployment(from git), rolling deploys, load balancing, auto-provisioning of instances, easy spot instances, one click roll-back, multi-az deployments, instance monitoring and replacement, secret management etc.
-   
+
     %h2 Rolling Deploys
     %p
-      Rolling deploys by default. Each application has a set of load balancers, on a successful deployment we do a rolling deploy and swap in the new servers. 
+      Rolling deploys by default. Each application has a set of load balancers, on a successful deployment we do a rolling deploy and swap in the new servers.
 
     %h2 Automatic Code Deployments
     %p
@@ -54,11 +54,5 @@
     %p
       You'll need a docker-compose.yml file and at least one Dockerfile. These are standard docker files but we've provided you with samples #{link_to "here", setup_path}. These will work with a simple rails app and should be easily modifiable to work with any language or framework.
   %h2 Ready to Deploy?
-  %p    
+  %p
     = link_to "Get Started  Now", apps_path, :class => "btn btn-large btn-info"
-
-    
-  
-
-
-
