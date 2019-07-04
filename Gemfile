@@ -20,7 +20,7 @@ gem "term-ansicolor"
 gem "devise"
 #gem 'devise-bootstrap-views'
 gem "omniauth-github"
-gem 'omniauth-bitbucket'
+gem 'omniauth-bitbucket' ,  :git => "https://github.com/reillyse/omniauth-bitbucket"
 gem "bitbucket_rest_api"
 gem "octokit"
 gem "sshkey"
