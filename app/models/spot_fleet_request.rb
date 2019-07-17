@@ -45,7 +45,7 @@ class SpotFleetRequest < ActiveRecord::Base
 
 
   def self.cleanup
-    SpotFleetRequest.where(:state => [:cancelled,:cancelled_terminating,:error_terminating,:error_terminated]).each do  |sfr|
+    SpotFleetRequest.where(:state => [:cancelled,:cancelled_terminating,:error_terminating,:error_terminated]).where("updated_at >? " , 5.weeks.ago).each do  |sfr|
 
       if sfr.machines.running.count > 0
         sfr.cancel_machines
@@ -198,7 +198,7 @@ class SpotFleetRequest < ActiveRecord::Base
     since_time = self.last_history_check
 
     history = get_history(since_time).history_records.map {|h|   h.event_information.event_description }
-    history.each do |h|
+    history.compact.each do |h|
       LogEntry.create! :stdout => "AWS:- " + h , :machine_id => pod.builder.id,:pod_id => pod.id ,:stage => "aws info:"
     end
     self.last_history_check = Time.now
