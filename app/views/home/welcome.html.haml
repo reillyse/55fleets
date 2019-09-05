@@ -44,7 +44,9 @@
 
 
     %p
-      We use the the docker-compose tool to deploy your application. Once you commit your code we check out the new version, build it and then scale up the required number of instances. We then do a rolling deploy adding web servers to the load balancer if this option is specified. You should see zero downtime (come on it's 2016!).
+      We use the the docker-compose tool to deploy your application. Once you commit your code we check out the new version, build it and then scale up the required number of instances. We then do a rolling deploy adding web servers to the load balancer if this option is specified.
+    %p
+      We only deploy code after health checks pass so you should see zero downtime.
     %p
       We then monitor your application. If any machines fail a keep-alive we spawn additional machines, replacing the old instances.
     %p
