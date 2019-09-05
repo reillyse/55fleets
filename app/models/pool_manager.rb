@@ -13,17 +13,9 @@ class PoolManager
 
     sfr = SpotFleetRequest.create!(:state => "creating" , :instance_count => instance_count,pod: pod, instance_types: instance_types)
     pod.spot_fleet_request = sfr
-    # if pod.spot_fleet_request
-
-    #   pod.spot_fleet_request.cancel
-    #   pod.spot_fleet_request.delete
-    #   pod.save!
-    # end
-
-    # pod.spot_fleet_request = SpotFleetRequest.new(:state => "creating" , :instance_count => instance_count)
+ 
      pod.save!
-    # pod.reload
-    #sfr  = pod.spot_fleet_request
+
     sfr.initialize_fleet
     sfr
   end

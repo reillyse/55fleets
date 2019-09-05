@@ -27,6 +27,7 @@ class InstanceMonitor
       rescue => e
 
         Rails.logger.error e.message
+        Rails.logger.error e.backtrace
         Rails.logger.error "Processing next SpotFleetRequest"
         next
       end
@@ -59,6 +60,7 @@ class InstanceMonitor
 
       rescue => e
         Rails.logger.error e.message
+        Rails.logger.error e.backtrace
         Rails.logger.error "Processing next SpotFleetRequest"
         raise e
       end
