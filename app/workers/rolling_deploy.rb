@@ -32,12 +32,14 @@ class RollingDeploy < ActiveJob::Base
     @app.pods.where("fleet_id < ?",fleet.id).map(&:spot_fleet_request).compact.select{|s| s.state == "active"}.map(&:cancel)
     #we only kill older machines
     all_machines = @app.machines.joins(:fleet).where("fleets.id < ?" ,fleet.id).reject { |m| m.pod.load_balanced}.reject { |m| m.terminated?}
+    fleets = all_machines.map(&:fleet).uniq
 
     active_machines = fleet.machines.reject { |m| m.pod.load_balanced }
 
     fleet.rolling_deploy_completed_at = Time.now
     fleet.app.deployed
     fleet.save!
+    fleets.each { |f| f.cleanup_when_finished }
 
     (all_machines - active_machines).each { |m|
       puts "queueing for reaping of old machines"
