@@ -1,4 +1,5 @@
-conn  = Proc.new {  REDIS}
+#conn  = Proc.new {  REDIS}
+conn  = Proc.new { Redis.new url: ENV["REDIS_URL"] }
 Aws.eager_autoload!
 
 begin
