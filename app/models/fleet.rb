@@ -57,6 +57,11 @@ class Fleet < ActiveRecord::Base
 
   end
 
+  def relaunch_this_fleet
+    fleet = Fleet.create! :app => self.app, :fleet_config => self.fleet_config
+    FleetLauncher.perform_later(fleet.id,self.fleet_config.id)
+  end
+
   def redeploy_this_fleet
     fleet = self
     @new_fleet = fleet.dup
