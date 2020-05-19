@@ -77,7 +77,7 @@ class App < ActiveRecord::Base
       p.spot_fleet_request.destroy
 
     rescue => e
-      puts e.message
+      Rails.logger.debug e.message
     ensure
       PoolManager.create_fleet(ENV["BUILD_MACHINE_POOL_SIZE"] ? ENV["BUILD_MACHINE_POOL_SIZE"].to_i  : 2, build_cache.pods.first,ENV["CACHE_MACHINE_TYPES"] || "t1.micro")
 

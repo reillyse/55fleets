@@ -1,7 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def bitbucket    
-    puts  request.env["omniauth.auth"]
+    Rails.logger.debug  request.env["omniauth.auth"]
     logger.debug request.env["omniauth.auth"]
     @user = User.from_omniauth_bitbucket(request.env["omniauth.auth"])
     
@@ -16,7 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def github
-    puts  request.env["omniauth.auth"]
+    Rails.logger.debug  request.env["omniauth.auth"]
     logger.debug request.env["omniauth.auth"]
     @user = User.from_omniauth_github(request.env["omniauth.auth"])
     

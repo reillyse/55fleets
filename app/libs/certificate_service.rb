@@ -12,7 +12,7 @@ class CertificateService
                                                private_key: private_key,
                                                certificate_chain: cert_chain
                                              })
-    puts resp.inspect
+    Rails.logger.debug resp.inspect
     return resp.server_certificate_metadata.arn
   end
 

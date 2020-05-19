@@ -13,7 +13,7 @@ class LogWorker
         LogHose.new(machine_id,log_for)
       end
     rescue => e
-      puts e.message
+      Rails.logger.debug e.message
       Rails.logger.warn e.inspect
       @machine.add_log(nil,"Log disconnected",@machine.pod)
       raise e

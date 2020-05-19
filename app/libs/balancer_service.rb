@@ -84,7 +84,7 @@ class BalancerService
       registered_instance_ids = registered_instance_ids.uniq - machines.map(&:instance_id)
 
       if registered_instance_ids.size > 0
-        puts "deregistering #{registered_instance_ids.to_s}"
+        Rails.logger.debug "deregistering #{registered_instance_ids.to_s}"
 
         registered_instance_ids.each { |i_id|
 
@@ -96,7 +96,7 @@ class BalancerService
         registered_instance_ids.each { |i_id|
 
           m = Machine.find_by_instance_id i_id
-          puts "Balancer Service reaping machine id =#{m.id}"
+          Rails.logger.debug "Balancer Service reaping machine id =#{m.id}"
           Reaper.set(wait_until: 10.seconds.from_now).perform_later(m.id)
 
         }
@@ -158,7 +158,7 @@ class BalancerService
 
   #     rescue 	Aws::ElasticLoadBalancing::Errors::LoadBalancerNotFound => e
   #       lb.terminated!
-  #       puts e.message
+  #       Rails.logger.debug e.message
   #       next
   #     end
   #   end
@@ -271,8 +271,8 @@ class BalancerService
                                                                    })
 
     rescue Aws::ElasticLoadBalancing::Errors::ListenerNotFound => e
-      puts e.message
-      puts "attempting to create"
+      Rails.logger.debug e.message
+      Rails.logger.debug "attempting to create"
 
       resp = elb_client.create_load_balancer_listeners({
                                                          load_balancer_name: load_balancer_name,

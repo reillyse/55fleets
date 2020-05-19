@@ -26,7 +26,7 @@ class NetworkConfig
     subnet_ids = []
     get_zones.each_with_index {|z,index|
       block = "10.0.#{index + 250}.0/24"
-      puts "trying to create a subnet with CIDR = #{block} in zone #{z} in vpc #{vpc_id}"
+      Rails.logger.debug "trying to create a subnet with CIDR = #{block} in zone #{z} in vpc #{vpc_id}"
       response = @vpc.create_subnet :cidr_block => block, :vpc_id => vpc_id, :availability_zone => z
 
       subnet_id = response.id
@@ -70,8 +70,8 @@ class NetworkConfig
     vpc = Aws::EC2::Vpc.new :id => vpc_id
     @vpc = Vpc.find_by_vpc_id(vpc_id)
     BalancerService.new.kill_load_balancers(@vpc.app.load_balancers.map(&:arn)) unless @vpc.app.load_balancers.empty?
-    puts vpc.inspect
-    puts vpc.network_interfaces.map(&:inspect)
+    Rails.logger.debug vpc.inspect
+    Rails.logger.debug vpc.network_interfaces.map(&:inspect)
 
     Rails.logger.warn  "Sometimes RDS resources are connected and are still in use so we cannot delete them here"
     vpc.network_interfaces.each {|n| n.detach({force: true}) rescue next}

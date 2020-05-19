@@ -46,8 +46,9 @@ Rails.application.configure do
 
   config.middleware.use Rack::SslEnforcer,  :except => proc { |req| env=req.env; env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] && env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker') }
 
-    require 'syslogger'
-    config.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("55Fleets-Staging", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
+
+
+
 
 
 
@@ -58,8 +59,8 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
-  # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+
+
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

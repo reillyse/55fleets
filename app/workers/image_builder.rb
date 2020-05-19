@@ -48,7 +48,7 @@ class ImageBuilder < ActiveJob::Base
         @machine.add_log("building",nil,pod)
 
         t = Terminal.new @machine
-        puts "connecting...."
+        Rails.logger.debug "connecting...."
 
         t.upload StringIO.new(repo.private_deploy_key.to_s),"deploy_key"
 
@@ -72,7 +72,7 @@ class ImageBuilder < ActiveJob::Base
           unless pod.before_hooks.blank?
 
             pod.before_hooks.each_line do |hook|
-              puts hook
+              Rails.logger.debug hook
               next if hook.blank?
               hook = hook.strip
               if pod.compose_filename.blank?
@@ -95,7 +95,7 @@ class ImageBuilder < ActiveJob::Base
           unless pod.after_hooks.blank?
 
             pod.after_hooks.each_line do |hook|
-              puts hook
+              Rails.logger.debug hook
               next if hook.blank?
               hook = hook.strip
               if pod.compose_filename.blank?

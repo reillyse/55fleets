@@ -31,7 +31,7 @@ class Image
     begin
       client.wait_until(:image_available, :image_ids => [image.image_id])
     rescue Aws::Waiters::Errors::FailureStateError => e
-      puts e.inspect
+      Rails.logger.debug e.inspect
       raise e.response
     end
     return image.image_id

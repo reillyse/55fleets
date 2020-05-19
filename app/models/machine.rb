@@ -4,9 +4,9 @@ class Machine < ActiveRecord::Base
 
   belongs_to :subnet
 
-  validates_uniqueness_of :ip_address, :scope => [:state], :if =>  Proc.new {|m| puts "---------------------------------------------------------------------------------------------------- checking ip_address = m.ip_address"
+  validates_uniqueness_of :ip_address, :scope => [:state], :if =>  Proc.new {|m| Rails.logger.debug "---------------------------------------------------------------------------------------------------- checking ip_address = m.ip_address"
     m.running?
-    puts "-- finished checking uniq of ip_address -- "
+    Rails.logger.debug "-- finished checking uniq of ip_address -- "
   }
 
   has_and_belongs_to_many :load_balancers
@@ -54,7 +54,7 @@ class Machine < ActiveRecord::Base
   end
 
   def queue_for_reaping
-    puts "Not reaping spot machines" and return if self.is_a?  SpotMachine
+    Rails.logger.debug "Not reaping spot machines" and return if self.is_a?  SpotMachine
     Reaper.perform_later self.id
   end
 
@@ -85,20 +85,20 @@ class Machine < ActiveRecord::Base
       #      t.connect ["docker rmi `docker images | awk '{ print $3; }'`","docker rm `docker ps -a -q`"," docker images -f dangling=true -q | xargs -r docker rmi"]
       t.connect ["df -h","docker rmi -f `docker images | awk '{ print $3; }'`", "df -h"]
     rescue FailedCommandException => e
-      puts e.message + " ... continuing"
+      Rails.logger.debug e.message + " ... continuing"
       #we fail here when we have no docker containers to delete
     end
 
     begin
       t.connect ["df -h","docker images -f dangling=true -q | xargs -r docker -f rmi", "df -h"]
     rescue FailedCommandException => e
-      puts e.message + " ... continuing"
+      Rails.logger.debug e.message + " ... continuing"
     end
 
     begin
       t.connect ["docker ps -q -a | xargs docker rm","df -h"]
     rescue FailedCommandException => e
-      puts e.message + " ... continuing"
+      Rails.logger.debug e.message + " ... continuing"
     end
 
   end
@@ -162,7 +162,7 @@ class Machine < ActiveRecord::Base
     begin
       Instance.terminate_instance self.instance_id if self.instance_id
     rescue Aws::EC2::Errors::InvalidInstanceIDNotFound => e
-      puts e.message
+      Rails.logger.debug e.message
       log("On Demand Machine Terminating error #{e.message}")
     end
   end
@@ -187,11 +187,11 @@ class Machine < ActiveRecord::Base
         return running! unless self.running?
       when "terminated" , "cancel-terminating"
         logger.debug "AWS says this machine is #{info.state.name}"
-        puts "state is in a terminating state - #{info.state.name}"
+        Rails.logger.debug "state is in a terminating state - #{info.state.name}"
         terminated! unless self.terminated!
       end
     rescue Aws::EC2::Errors::InvalidInstanceIDNotFound => e
-      puts "We can't find the instance so going to terminate"
+      Rails.logger.debug "We can't find the instance so going to terminate"
       self.terminated!
     end
   end
@@ -202,8 +202,8 @@ class Machine < ActiveRecord::Base
 
   def get_info
     info = Instance.get_instance_info self.instance_id
-    puts info.inspect
-    puts "here"
+    Rails.logger.debug info.inspect
+    Rails.logger.debug "here"
     self.ip_address = info.public_ip_address
     self.instance_type = info.instance_type
     self.subnet = Subnet.find_by_subnet_id info.subnet_id

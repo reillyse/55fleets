@@ -45,10 +45,10 @@ module BaseWorker
     end
 
     def check_the_starting_state object
-      puts "-------------------- states"
-      puts object.state.to_s.inspect
-      puts self.starting_state_name.to_s.inspect
-      puts "-------------------- state check over"
+      Rails.logger.debug "-------------------- states"
+      Rails.logger.debug object.state.to_s.inspect
+      Rails.logger.debug self.starting_state_name.to_s.inspect
+      Rails.logger.debug "-------------------- state check over"
       
       return false unless object.state.to_s == self.starting_state_name.to_s
       return true
@@ -66,7 +66,7 @@ module BaseWorker
   def perform object_id
     self.object = self.class.object_class_name.to_s.classify.constantize.find object_id
     
-    puts object
+    Rails.logger.debug object
     return "Wrong Starting State #{self.class.starting_state_name} != #{object.state}" unless  self.class.check_the_starting_state(object)
 
     mutate object

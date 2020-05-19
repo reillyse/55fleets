@@ -12,7 +12,7 @@ class CertsController < ApplicationController
       redirect_to [@app,@cert]
 
     rescue => e
-      puts e.message
+      Rails.logger.debug e.message
       Rails.logger.debug e.message
       redirect_to app_certs_path(@app), :flash => { :error => e.message }
     end

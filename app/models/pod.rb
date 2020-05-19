@@ -136,7 +136,7 @@ class Pod < ActiveRecord::Base
   end
 
   def remove_on_demand_machines instance_count
-    puts "removing #{instance_count} on_demand_machines"
+    Rails.logger.debug "removing #{instance_count} on_demand_machines"
     return unless instance_count && instance_count > 0
     machines = self.on_demand_machines.running
     instance_count.times { |ic| machines[ic].shutdown! }
@@ -150,7 +150,7 @@ class Pod < ActiveRecord::Base
       value < self.permanent_minimum
       scale_down_permanent value
     else
-      puts "no change"
+      Rails.logger.debug "no change"
     end
 
 
@@ -224,7 +224,7 @@ class Pod < ActiveRecord::Base
     rescue Aws::EC2::Errors::InvalidAMIIDUnavailable => e1
       self.clean_up!
     rescue Aws::EC2::Errors::ServiceError => e
-      puts e.message
+      Rails.logger.debug e.message
     end
   end
 end

@@ -5,7 +5,7 @@ class WebhooksController < ApplicationController
   
   def push
     Rails.logger.info params
-    puts params.inspect
+    Rails.logger.debug params.inspect
 
     repo = Repo.find_by_secret_key params[:secret_key]
     WebhookPush.create_from_webhook(params.merge(:repo_id => repo.id))

@@ -29,7 +29,7 @@ class LogEntry
     begin
       LogEntry.create! params
     rescue => e
-      puts e.message
+      Rails.logger.debug e.message
       logger.error e.message
     end
   end

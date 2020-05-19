@@ -6,7 +6,7 @@ class Terminal
 
 
   def initialize machine,user="ubuntu",key=nil,timeout=nil
-    puts "timeout = #{timeout}" if timeout
+    Rails.logger.debug "timeout = #{timeout}" if timeout
     @machine = machine
     @host = machine.ip_address
     @user = user
@@ -29,7 +29,7 @@ class Terminal
   def stream command
     Net::SSH.start(@host, @user,  :key_data => [ @key ], :timeout => @timeout) do |ssh|
       ssh.exec!(command) do |channel, stream, data|
-        puts data
+        Rails.logger.debug data
       end
     end
   end
@@ -45,43 +45,43 @@ class Terminal
             command = command.first
           end
           begin
-            puts "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- jobs #{command}"
+            Rails.logger.debug "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- jobs #{command}"
             out = ssh_exec!(ssh,command,"build",log_line)
-            puts "stdout == #{out[0]}"
-            puts "stderr == #{out[1]}"
-            puts "exit-code == #{out[2]}"
-            puts "exit-signal == #{out[3]}"
-            puts "machine id is #{@machine.id}"
+            Rails.logger.debug "stdout == #{out[0]}"
+            Rails.logger.debug "stderr == #{out[1]}"
+            Rails.logger.debug "exit-code == #{out[2]}"
+            Rails.logger.debug "exit-signal == #{out[3]}"
+            Rails.logger.debug "machine id is #{@machine.id}"
             raise FailedCommandException,out[1] unless out[2] == 0
             raise FailedCommandException,out[1] if out[1].match("Service.*failed to build: The command.*returned a non-zero code:.*")
-            puts "finished executing #{command} "
+            Rails.logger.debug "finished executing #{command} "
           rescue Errno::ETIMEDOUT => e
             @machine.add_log(e.message)
             @machine.add_log("retrying...")
-            puts "  Timed out .. retrying"
+            Rails.logger.debug "  Timed out .. retrying"
             sleep(2)
             retry
           rescue Errno::EHOSTUNREACH
-            puts "  Host unreachable .. retrying"
+            Rails.logger.debug "  Host unreachable .. retrying"
             sleep(2)
             retry
           rescue Errno::ECONNREFUSED
-            puts "  Connection refused .. retrying"
+            Rails.logger.debug "  Connection refused .. retrying"
             sleep(2)
             retry
           rescue Net::SSH::HostKeyMismatch => e
-            puts e.message
+            Rails.logger.debug e.message
             e.remember_host!
             retry
 
           rescue Net::SSH::ConnectionTimeout => e
             @machine.add_log(e.message)
             @machine.add_log("retrying...")
-            puts e.message
+            Rails.logger.debug e.message
             retry
 
           rescue Net::SSH::AuthenticationFailed
-            puts "  Authentication failure"
+            Rails.logger.debug "  Authentication failure"
             raise
           end
         end
@@ -90,30 +90,30 @@ class Terminal
     rescue Errno::ETIMEDOUT => e
       @machine.add_log(e.message)
       @machine.add_log("retrying...")
-      puts "  Timed out .. retrying"
+      Rails.logger.debug "  Timed out .. retrying"
       sleep(2)
       retry
     rescue Errno::EHOSTUNREACH
-      puts "  Host unreachable .. retrying"
+      Rails.logger.debug "  Host unreachable .. retrying"
       sleep(2)
       retry
     rescue Errno::ECONNREFUSED
-      puts "  Connection refused .. retrying"
+      Rails.logger.debug "  Connection refused .. retrying"
       sleep(2)
       retry
     rescue Net::SSH::HostKeyMismatch => e
-      puts e.message
+      Rails.logger.debug e.message
       e.remember_host!
       retry
     rescue Net::SSH::AuthenticationFailed
-      puts "  Authentication failure"
+      Rails.logger.debug "  Authentication failure"
       raise
 
     rescue Net::SSH::ConnectionTimeout => e
 
       @machine.add_log(e.message)
       @machine.add_log("retrying...")
-      puts e.message
+      Rails.logger.debug e.message
       retry
     end
 
@@ -125,32 +125,32 @@ class Terminal
       result = Net::SCP.upload!(@host, @user,
                                 file, remote_file,
                                 :ssh => { :key_data => [@key] }, :recursive => dir) do |ch, name, sent, total|
-        puts "#{name}: (#{ ((sent.to_f / total.to_f) * 100).round(2)}%)"
+        Rails.logger.debug "#{name}: (#{ ((sent.to_f / total.to_f) * 100).round(2)}%)"
       end
     rescue Errno::ETIMEDOUT
-      puts "  Timed out .. retrying"
+      Rails.logger.debug "  Timed out .. retrying"
       sleep(5)
       retry
     rescue Errno::EHOSTUNREACH
-      puts "  Host unreachable .. retrying"
+      Rails.logger.debug "  Host unreachable .. retrying"
       sleep(5)
       retry
     rescue Errno::ECONNREFUSED
-      puts "  Connection refused .. retrying"
+      Rails.logger.debug "  Connection refused .. retrying"
       sleep(5)
       retry
     rescue Net::SSH::HostKeyMismatch => e
-      puts e.message
+      Rails.logger.debug e.message
       e.remember_host!
       retry
 
     rescue Net::SSH::AuthenticationFailed
-      puts "  Authentication failure"
+      Rails.logger.debug "  Authentication failure"
       raise
 
     end
 
-    puts result
+    Rails.logger.debug result
   end
 
   def ssh_exec!(ssh, command,stage="build",log_line=nil)
@@ -168,13 +168,13 @@ class Terminal
         end
         channel.on_data do |ch,data|
           stdout_data+= data
-          puts "stdout #{data}"
+          Rails.logger.debug "stdout #{data}"
           LogEntry.write_log :stdout =>  data, :machine_id => @machine.id, :pod_id => pod_or_nil(@machine), :stage => stage
         end
 
         channel.on_extended_data do |ch,type,data|
           stderr_data+=data
-          puts "stderr: #{data}"
+          Rails.logger.debug "stderr: #{data}"
           LogEntry.write_log :stderr =>  data, :machine_id => @machine.id, :pod_id => pod_or_nil(@machine)
         end
 

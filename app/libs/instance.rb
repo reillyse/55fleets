@@ -9,7 +9,7 @@ class Instance
   #   instance_type = "c4.large"
 
   #   instance = { instance_type: instance_type,  image_id: ami,  key_name: "gsg-keypair"}
-  #   puts "Creating instance #{instance.inspect}"
+  #   Rails.logger.debug "Creating instance #{instance.inspect}"
   #   response = @client.request_spot_instances( launch_specification: instance, spot_price: "0.05", type: "one-time")
 
 
@@ -19,7 +19,7 @@ class Instance
   #   begin
   #     @client.wait_until(:spot_instance_request_fulfilled, spot_instance_request_ids: [request_id])
   #   rescue Aws::Waiters::Errors::FailureStateError => e
-  #     puts e.message
+  #     Rails.logger.debug e.message
   #     raise e
   #   end
 
@@ -27,7 +27,7 @@ class Instance
   #   instance_id = instant.spot_instance_requests[0].instance_id
 
 
-  #   #    puts instant.reservations.first.instances.first.network_interfaces.first
+  #   #    Rails.logger.debug instant.reservations.first.instances.first.network_interfaces.first
   #   aws_instance = Aws::EC2::Instance.new(instance_id,@client)
   #   ip_address = aws_instance.network_interfaces.first.association.public_ip
 
@@ -39,13 +39,13 @@ class Instance
 
 
   def self.create_instance instance_type,vpc, subnet_id,ami = "ami-63331109"
-    puts "creating an instance with instance_type=#{instance_type}, vpc = #{vpc}, subnet_id = #{subnet_id}, ami = #{ami}"
+    Rails.logger.debug "creating an instance with instance_type=#{instance_type}, vpc = #{vpc}, subnet_id = #{subnet_id}, ami = #{ami}"
     @vpc = Vpc.find_by_vpc_id vpc
     @client = Aws::EC2::Client.new
 
 
     instance = { instance_type: instance_type, min_count: 1, max_count: 1, image_id: ami, subnet_id: subnet_id , key_name: @vpc.app.deploy_key.name }
-    puts "Creating instance #{instance.inspect}"
+    Rails.logger.debug "Creating instance #{instance.inspect}"
     i = @client.run_instances instance
 
     new_instance = i.instances.first
@@ -54,7 +54,7 @@ class Instance
     begin
       @client.wait_until(:instance_running, instance_ids:[i_id])
     rescue Aws::Waiters::Errors::FailureStateError => e
-      puts e.message
+      Rails.logger.debug e.message
       raise e
     end
 
@@ -68,7 +68,7 @@ class Instance
     #can get private ip very easy here too
 
 
-    puts instant.reservations.first.instances.first.network_interfaces.first
+    Rails.logger.debug instant.reservations.first.instances.first.network_interfaces.first
     ip_address = instant.reservations.first.instances.first.network_interfaces.first.association.public_ip
 
 

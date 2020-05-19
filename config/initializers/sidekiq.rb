@@ -14,8 +14,8 @@ begin
   Sidekiq.configure_server do |config|
     config.redis = ConnectionPool.new(size: 7, &conn)
     config.on(:shutdown) do
-      puts "Got TERM, shutting down process..."
-      puts "we defo have to watch what we put here. We don't want to kill everything when we deploy a new version"
+      Rails.logger.debug "Got TERM, shutting down process..."
+      Rails.logger.debug "we defo have to watch what we put here. We don't want to kill everything when we deploy a new version"
 
     end
 

@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from NotAllowed do |exception|
     render text: "This user does not have permission to access this resource", status: 401
-    puts exception.message
+    Rails.logger.debug exception.message
 
   end
 end

@@ -14,7 +14,7 @@ class Deployer  < ActiveJob::Base
     key = machine.app.deploy_key.name
     machine.add_log("Initializing Machine",nil,machine.pod)
     t = Terminal.new machine
-    puts "connecting...."
+    Rails.logger.debug "connecting...."
 
 
     Timeout::timeout(20.minutes) do

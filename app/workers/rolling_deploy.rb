@@ -42,8 +42,8 @@ class RollingDeploy < ActiveJob::Base
     fleets.each { |f| f.cleanup_when_finished }
 
     (all_machines - active_machines).each { |m|
-      puts "queueing for reaping of old machines"
-      puts m.id
+      Rails.logger.debug "queueing for reaping of old machines"
+      Rails.logger.debug m.id
 
         Reaper.perform_later(m.id)
 

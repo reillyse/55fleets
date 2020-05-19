@@ -78,9 +78,9 @@ class SpotFleetRequest < ActiveRecord::Base
   end
 
   def update_my_fleet
-    puts "update_my_fleet+"
+    Rails.logger.debug "update_my_fleet+"
     self.state = SpotFleet.new.check_spot_fleet_request self.spot_fleet_request_id
-    puts "update_my_fleet-"
+    Rails.logger.debug "update_my_fleet-"
     save!
   end
 
@@ -99,18 +99,18 @@ class SpotFleetRequest < ActiveRecord::Base
   def update_instances build_system=false
 
 
-    puts "get_new_instances+"
-    puts "its the build_system ------------------------------" if build_system
     Rails.logger.debug "get_new_instances+"
-    puts "Spot Fleet Request == #{self.id}"
+    Rails.logger.debug "its the build_system ------------------------------" if build_system
+    Rails.logger.debug "get_new_instances+"
+    Rails.logger.debug "Spot Fleet Request == #{self.id}"
     resp = SpotFleet.new.get_spot_fleet_request_instances self.spot_fleet_request_id
     machines  = []
     resp.active_instances.each { |i|
       m = Machine.where(instance_id: i.instance_id, :state => ["created","starting","running"]).first
 
       if m.nil?
-        puts "---------------------------------------------------------------------------------------------------- We havent found an instance with state in_action or running and instance_id"
-        puts i.instance_id
+        Rails.logger.debug "---------------------------------------------------------------------------------------------------- We havent found an instance with state in_action or running and instance_id"
+        Rails.logger.debug i.instance_id
 
         if build_system
           m = BuilderMachine.create! :instance_id => i.instance_id, :pod_id => self.pod.id
@@ -148,7 +148,7 @@ class SpotFleetRequest < ActiveRecord::Base
       m.shutdown!
 
     }
-    puts "get_new_instances-"
+    Rails.logger.debug "get_new_instances-"
     Rails.logger.debug "get_new_instances-"
   end
 
@@ -160,9 +160,9 @@ class SpotFleetRequest < ActiveRecord::Base
   def cancel
     resp = SpotFleet.new.cancel(self.spot_fleet_request_id)
     if resp.unsuccessful_fleet_requests.size > 0
-      puts resp.unsuccessful_fleet_requests[0].error.message
-      puts resp.unsuccessful_fleet_requests[0].spot_fleet_request_id
-      puts resp.unsuccessful_fleet_requests[0].error.code
+      Rails.logger.debug resp.unsuccessful_fleet_requests[0].error.message
+      Rails.logger.debug resp.unsuccessful_fleet_requests[0].spot_fleet_request_id
+      Rails.logger.debug resp.unsuccessful_fleet_requests[0].error.code
     else
       self.state = resp.successful_fleet_requests[0].current_spot_fleet_request_state
       save!
