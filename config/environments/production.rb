@@ -46,7 +46,7 @@ Rails.application.configure do
   config.middleware.use Rack::SslEnforcer,  :except => proc { |req| env=req.env; env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] && env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker')  rescue false}
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
