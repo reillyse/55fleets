@@ -6,7 +6,6 @@ class Machine < ActiveRecord::Base
 
   validates_uniqueness_of :ip_address, :scope => [:state], :if =>  Proc.new {|m| Rails.logger.debug "---------------------------------------------------------------------------------------------------- checking ip_address = m.ip_address"
     m.running?
-    Rails.logger.debug "-- finished checking uniq of ip_address -- "
   }
 
   has_and_belongs_to_many :load_balancers
