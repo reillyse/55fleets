@@ -50,7 +50,7 @@ class Fleet < ActiveRecord::Base
     self.pods.map(&:machines).flatten.select(&:running?).each {|m|
       m.shutdown!
     }
-    self.pods.map(&:spot_fleet_request).compact.select(&:active).map(&:cancel)
+    self.pods.map(&:spot_fleet_request).compact.select(&:active?).map(&:cancel!)
   end
 
   def post_deploy_hook
