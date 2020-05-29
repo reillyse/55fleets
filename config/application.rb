@@ -19,6 +19,10 @@ module Flywheel
     config.react.variant      = :production
     config.react.addons       = true
 
+    config.react.jsx_transform_options = {
+      optional: ['es7.classProperties']
+    }
+
     config.generators do |g|
       g.orm :active_record
     end

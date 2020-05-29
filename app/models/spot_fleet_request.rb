@@ -1,7 +1,7 @@
 class SpotFleetRequest < ActiveRecord::Base
   include PersistantErrors
 
-  before_save  :ensure_we_have_a_client_token, :on => :create
+  before_save  :ensure_we_have_a_client_token
 
   #after_commit :create_the_spot_fleet_request_on_amazon, :on => :create
 

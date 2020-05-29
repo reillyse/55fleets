@@ -1,8 +1,6 @@
-var { propTypes } = require("prop-types");
-
 var App = React.createClass({
   propTypes: {
-    initialState: React.PropTypes.object
+    initialState: PropTypes.object
   },
   componentDidMount: function() {},
   componentWillMount: function() {

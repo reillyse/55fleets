@@ -1227,7 +1227,7 @@ GEM
       ffi (~> 1.0)
     rb-readline (0.5.5)
     rdoc (4.3.0)
-    react-rails (2.6.1)
+    react-rails (2.3.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -1376,7 +1376,7 @@ DEPENDENCIES
   rails_12factor
   rails_stdout_logging
   rb-readline
-  react-rails
+  react-rails (= 2.3.1)
   redis
   ruby-progressbar
   sass

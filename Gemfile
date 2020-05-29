@@ -11,7 +11,7 @@ gem "mongoid-autoinc" #, '~> 5.0.0'
 
 
 
-gem "react-rails"
+gem "react-rails", "2.3.1"
 
 gem 'rack-ssl-enforcer'
 
