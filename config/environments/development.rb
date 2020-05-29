@@ -9,6 +9,10 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  config.hosts << "55fleets.test"
+
+  config.react.variant = :development
+
   # Show full error reports.
   config.consider_all_requests_local = true
 
@@ -59,4 +63,10 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  ENV["REDIS_DB"] = "7"
+  Mongo::Logger.logger       = ::Logger.new('tmp/mongo.log')
+  Mongo::Logger.logger.level = ::Logger::INFO
+  ENV["BUILD_MACHINE_POOL_SIZE"] = "1"
+  ENV["BUILD_MACHINE_TYPES"] = "t3.medium,c4.large,m5.large"
 end

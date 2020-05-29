@@ -15,5 +15,17 @@ module Flywheel
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    config.react.variant      = :production
+    config.react.addons       = true
+
+    config.generators do |g|
+      g.orm :active_record
+    end
+
+    config.to_prepare do
+      Devise::SessionsController.skip_before_action :find_app
+      Devise::OmniauthCallbacksController.skip_before_action :find_app
+    end
   end
 end

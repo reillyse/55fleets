@@ -51,7 +51,7 @@ gem 'haml-rails'
 gem 'rb-readline'
 
 # Use SCSS for stylesheets
-gem 'sass-rails' , '~> 5.0'
+gem 'sass-rails' , '~> 6.0'
 gem "coffee-rails"
 # Use Uglifier as compressor for JavaScript assets
 #gem 'uglifier', '>= 3.3.0'
