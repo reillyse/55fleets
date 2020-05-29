@@ -1,5 +1,5 @@
 class MachinesController < ApplicationController
-  before_filter :find_app , :only => :turn_on_logging
+  before_action :find_app , :only => :turn_on_logging
 
   def turn_on_logging
     @machine = @app.machines.find params[:machine_id]

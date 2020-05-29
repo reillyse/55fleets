@@ -1,6 +1,6 @@
 class FleetsController < ApplicationController
 
-  before_filter :find_app, :except => :fleet_direct
+  before_action :find_app, :except => :fleet_direct
   def show
     @fleet = @app.fleets.find params[:id]
 

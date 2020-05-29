@@ -1,5 +1,5 @@
 class PodsController < ApplicationController
-  before_filter :find_app
+  before_action :find_app
 
   def scale
     @pod = @app.pods.find params[:pod_id]

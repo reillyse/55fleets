@@ -11,7 +11,7 @@ gem "mongoid-autoinc" #, '~> 5.0.0'
 
 
 
-gem "react-rails", "1.5.0"
+gem "react-rails"
 
 gem 'rack-ssl-enforcer'
 
@@ -100,7 +100,7 @@ group :development, :test do
   #gem 'spring'
 
   gem "erb2haml", :group => :development
-
+  gem "listen"
 end
 
 

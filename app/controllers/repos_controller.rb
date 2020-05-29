@@ -1,6 +1,6 @@
 class ReposController  < ApplicationController
-  before_filter :authenticate_user!
-  skip_before_filter :find_app
+  before_action :authenticate_user!
+  skip_before_action :find_app
 
   def index
     @repos = current_user.repos

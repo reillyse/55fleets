@@ -1,7 +1,7 @@
 class WebhooksController < ApplicationController
   protect_from_forgery :except => :push
-  skip_before_filter :find_app
-  skip_before_filter :authenticate_user!
+  skip_before_action :find_app
+  skip_before_action :authenticate_user!
   
   def push
     Rails.logger.info params

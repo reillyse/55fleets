@@ -1120,6 +1120,9 @@ GEM
       actionpack (>= 5.0)
       less (~> 2.6.0)
       sprockets (~> 3.0)
+    listen (3.2.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.5.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -1224,12 +1227,11 @@ GEM
       ffi (~> 1.0)
     rb-readline (0.5.5)
     rdoc (4.3.0)
-    react-rails (1.5.0)
+    react-rails (2.6.1)
       babel-transpiler (>= 0.7.0)
-      coffee-script-source (~> 1.8)
       connection_pool
       execjs
-      rails (>= 3.2)
+      railties (>= 3.2)
       tilt
     redis (3.3.5)
     redis-namespace (1.7.0)
@@ -1354,6 +1356,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
+  listen
   mongoid
   mongoid-autoinc
   net-scp
@@ -1371,7 +1374,7 @@ DEPENDENCIES
   rails_12factor
   rails_stdout_logging
   rb-readline
-  react-rails (= 1.5.0)
+  react-rails
   redis
   ruby-progressbar
   sass

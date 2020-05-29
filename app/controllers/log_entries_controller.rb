@@ -1,6 +1,6 @@
 class LogEntriesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :find_app
+  before_action :authenticate_user!
+  before_action :find_app
 
   def get_next_log
     last_log = params[:last_log].to_i
