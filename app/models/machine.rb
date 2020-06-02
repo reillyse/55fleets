@@ -10,8 +10,8 @@ class Machine < ActiveRecord::Base
 
   has_and_belongs_to_many :load_balancers
 
-  has_one :app, :through => :pod
   belongs_to :pod, :touch => true
+  has_one :app, :through => :pod
   has_one :fleet, :through => :pod
   state_machine :state, :initial => :created do
     event :starting  do

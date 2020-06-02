@@ -27,6 +27,8 @@ module Flywheel
       g.orm :active_record
     end
 
+    Rails.application.config.active_record.belongs_to_required_by_default = false
+
     config.to_prepare do
       Devise::SessionsController.skip_before_action :find_app
       Devise::OmniauthCallbacksController.skip_before_action :find_app
