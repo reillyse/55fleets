@@ -64,9 +64,12 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.active_job.queue_adapter = :sidekiq
+
   ENV["REDIS_DB"] = "7"
   Mongo::Logger.logger       = ::Logger.new('tmp/mongo.log')
   Mongo::Logger.logger.level = ::Logger::INFO
   ENV["BUILD_MACHINE_POOL_SIZE"] = "1"
   ENV["BUILD_MACHINE_TYPES"] = "t3.medium,c4.large,m5.large"
+  puts("Loaded the env file")
 end

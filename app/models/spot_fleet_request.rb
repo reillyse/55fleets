@@ -199,7 +199,12 @@ class SpotFleetRequest < ActiveRecord::Base
 
     history = get_history(since_time).history_records.map {|h|   h.event_information.event_description }
     history.compact.each do |h|
-      LogEntry.create! :stdout => "AWS:- " + h , :machine_id => pod.builder.id,:pod_id => pod.id ,:stage => "aws info:"
+      if pod.builder
+        LogEntry.create! :stdout => "AWS:- " + h , :machine_id => pod.builder.id,:pod_id => pod.id ,:stage => "aws info:"
+      else
+        Rails.logger.warn "AWS:- " + h
+      end
+
     end
     self.last_history_check = Time.now
     save!

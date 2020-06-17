@@ -1,6 +1,6 @@
 class SshKey < ActiveRecord::Base
 
-  attr_encrypted :private_key, :key => ENV["GSG_KEY_SECRET"]
+  attr_encrypted :private_key, :key => ENV["GSG_KEY_SECRET"], algorithm: 'aes-256-cbc', mode: :single_iv_and_salt, insecure_mode: true
 
 
   def self.create_key name
