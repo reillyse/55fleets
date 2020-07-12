@@ -5,8 +5,8 @@ class App < ActiveRecord::Base
 
   has_many :fleets
   has_many :machines, :through => :fleets
-  has_many :builder_machines, :through => :pods, :source => :builder
   has_many :pods
+  has_many :builder_machines, :through => :pods, :source => :builder
   has_many :env_configs
   has_many :vpcs
   has_many :load_balancers

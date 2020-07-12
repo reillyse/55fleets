@@ -1,5 +1,5 @@
 class LoadBalancersController < ApplicationController
-  before_filter :find_app
+  before_action :find_app
 
   def add_certificate
     cert = @app.certs.find params[:cert_id]

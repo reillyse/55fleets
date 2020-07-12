@@ -15,6 +15,7 @@
 //= require react
 //= require react_ujs
 //= require components
+//= require prop-types
 
 //= require jquery
 //= require jquery.turbolinks
@@ -24,15 +25,15 @@
 //= require fleet_configs
 
 $(function() {
-
-
-    $('.hideshow').on('click', function(event) {
-	console.log(event);
-	console.log(event.target);
-	$(this).find("input.showhidebutton").toggle('show');
-	$(this).find(".content").toggle('show');
-	return true;
-
+  $(".hideshow").on("click", function(event) {
+    console.log(event);
+    console.log(event.target);
+    $(this)
+      .find("input.showhidebutton")
+      .toggle("show");
+    $(this)
+      .find(".content")
+      .toggle("show");
+    return true;
+  });
 });
-
-})

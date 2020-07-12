@@ -1,5 +1,5 @@
 class CertsController < ApplicationController
-  before_filter :find_app
+  before_action :find_app
   
   def new
     @cert = @app.certs.new :port => "443"

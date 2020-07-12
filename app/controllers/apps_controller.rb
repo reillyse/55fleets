@@ -1,6 +1,6 @@
 class AppsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :find_app, :only => [:show,:update,:edit]
+  before_action :authenticate_user!
+  before_action :find_app, :only => [:show,:update,:edit]
   caches_action :show, cache_path: Proc.new { @app.updated_at.to_s + request.format.to_s }, expires_in: 1.hour
 
   def find_app
