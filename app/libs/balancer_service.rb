@@ -61,6 +61,31 @@ class BalancerService
     arns = elb_arns.split(",")
 
 
+    # example of what the response looks like. We should perhaps
+    # check if individual machines are unhealthy and flag that on the machine possibly pushing it up to the dashboard so we can see individual failures - possible then refresh them after a certain time
+
+    # :target_health_descriptions:
+    # - :target:
+    #     :id: i-08be20de58cbfa147
+    # :port: 80
+    # :health_check_port: '80'
+    # :target_health:
+    #   :state: healthy
+    # - :target:
+    #     :id: i-01387e1a6e1bb0dcb
+    # :port: 80
+    # :health_check_port: '80'
+    # :target_health:
+    #   :state: unhealthy
+    # :reason: Target.Timeout
+    # :description: Request timed out
+    # - :target:
+    #     :id: i-015d8312bd2b3ab69
+    # :port: 80
+    # :health_check_port: '80'
+    # :target_health:
+    #   :state: healthy
+
 
     Parallel.each(arns, in_threads: arns.count, progress: "Registering with Load Balancer"){ |elb_arn|
       target_group_arn = get_first_target_group_from_elb_arn elb_arn
