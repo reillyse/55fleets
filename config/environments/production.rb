@@ -1,4 +1,6 @@
 Rails.application.configure do
+  ENV["FOG_DIRECTORY"] = "tankerfleet"
+  config.assets.digest = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -29,8 +31,14 @@ Rails.application.configure do
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
-
+   config.action_controller.asset_host =  "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+   config.assets.prefix = "/production/assets"
+   config.assets.initialize_on_precompile  = false
+   config.assets.enabled = true
+   ENV["REDIS_DB"] = "6"
+   ENV["BUILD_MACHINE_POOL_SIZE"]= "2"
+   ENV["BUILD_MACHINE_TYPES"] = "m5.large,c4.large"
+   
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
@@ -48,7 +56,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -109,4 +117,7 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  config.secret_key_base = ENV['SECRET_KEY_BASE']
+
+
 end

@@ -33,5 +33,13 @@ module Flywheel
       Devise::SessionsController.skip_before_action :find_app
       Devise::OmniauthCallbacksController.skip_before_action :find_app
     end
+
+    config.force_ssl = true
+    config.ssl_options = {
+      redirect: {
+        exclude: -> req { env=req.env; env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] && env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker') }
+      }
+    }
+
   end
 end
