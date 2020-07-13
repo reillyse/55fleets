@@ -46,7 +46,7 @@ class BalancerService
 
   def rolling_deploy(machines,elb_arns)
 
-
+    Rails.logger.info "Rolling deploy with machines #{machines.map(&:ip_address)}"
     # add the instance
     # wait for it to be up and healthy in the load balancer
     # remove the old instances
@@ -55,10 +55,36 @@ class BalancerService
     machines.each { |m|
 
       BalancerService.new.register_instance m.id,nil,elb_arns
+      Rails.logger.info "Registered #{m.ip_address}"
     }
 
     arns = elb_arns.split(",")
 
+
+    # example of what the response looks like. We should perhaps
+    # check if individual machines are unhealthy and flag that on the machine possibly pushing it up to the dashboard so we can see individual failures - possible then refresh them after a certain time
+
+    # :target_health_descriptions:
+    # - :target:
+    #     :id: i-08be20de58cbfa147
+    # :port: 80
+    # :health_check_port: '80'
+    # :target_health:
+    #   :state: healthy
+    # - :target:
+    #     :id: i-01387e1a6e1bb0dcb
+    # :port: 80
+    # :health_check_port: '80'
+    # :target_health:
+    #   :state: unhealthy
+    # :reason: Target.Timeout
+    # :description: Request timed out
+    # - :target:
+    #     :id: i-015d8312bd2b3ab69
+    # :port: 80
+    # :health_check_port: '80'
+    # :target_health:
+    #   :state: healthy
 
 
     Parallel.each(arns, in_threads: arns.count, progress: "Registering with Load Balancer"){ |elb_arn|
@@ -70,6 +96,11 @@ class BalancerService
                        target_group_arn: target_group_arn
 
 
+                     },{
+                       before_wait: -> (attempts,response) do
+                         # could add a check in here to make sure there isn't a newer load balancing happening ?
+                         Rails.logger.info("In ELB register response is: #{response.to_h.to_yaml}")
+                       end
                      })
 
     }
@@ -116,11 +147,11 @@ class BalancerService
 
     target_group_arn = get_first_target_group_from_elb_arn elb_arn
     from_elb = elb_client.deregister_targets({
-                                        target_group_arn: target_group_arn,
-                                        targets: [
-                                          {
-                                            id: i_id,
-                                          },] })
+                                               target_group_arn: target_group_arn,
+                                               targets: [
+                                                 {
+                                                   id: i_id,
+                                                 },] })
   end
 
   def get_targets_from_elb_arn elb_arn
@@ -198,46 +229,46 @@ class BalancerService
     lb.running!
 
     target_group  = elb_client.create_target_group({
-                                        name: "targets-#{lb.name}"[0..30],
-                                        port: 80,
-                                        protocol: "HTTP",
-                                        vpc_id: vpc.vpc_id,
-                                        health_check_protocol: "HTTP",
-                                        health_check_interval_seconds: 10,
-                                        health_check_timeout_seconds: 9,
-                                        healthy_threshold_count: 2,
-                                        unhealthy_threshold_count: 2,
+                                                     name: "targets-#{lb.name}"[0..30],
+                                                     port: 80,
+                                                     protocol: "HTTP",
+                                                     vpc_id: vpc.vpc_id,
+                                                     health_check_protocol: "HTTP",
+                                                     health_check_interval_seconds: 10,
+                                                     health_check_timeout_seconds: 9,
+                                                     healthy_threshold_count: 2,
+                                                     unhealthy_threshold_count: 2,
                                                    }).first.target_groups.first
 
 
-      elb_client.create_listener({
-                               default_actions: [
-                                 {
-                                   target_group_arn: target_group.target_group_arn,
-                                   type: "forward",
-                                 },
-                               ],
-                               load_balancer_arn: load_balancer.load_balancer_arn,
-                               port: 80,
-                               protocol: "HTTP",
-                                 })
+    elb_client.create_listener({
+                                 default_actions: [
+                                   {
+                                     target_group_arn: target_group.target_group_arn,
+                                     type: "forward",
+                                   },
+                                 ],
+                                 load_balancer_arn: load_balancer.load_balancer_arn,
+                                 port: 80,
+                                 protocol: "HTTP",
+                               })
 
-      ## need an ssl cert for a https listener, this will need to be done manually
-      # elb_client.create_listener({
-      #                              default_actions: [
-      #                                {
-      #                                  target_group_arn: target_group.target_group_arn,
-      #                                  type: "forward",
-      #                                },
-      #                              ],
-      #                              load_balancer_arn: load_balancer.load_balancer_arn,
-      #                              port: 443,
-      #                              protocol: "HTTPS",
-      #                            })
+    ## need an ssl cert for a https listener, this will need to be done manually
+    # elb_client.create_listener({
+    #                              default_actions: [
+    #                                {
+    #                                  target_group_arn: target_group.target_group_arn,
+    #                                  type: "forward",
+    #                                },
+    #                              ],
+    #                              load_balancer_arn: load_balancer.load_balancer_arn,
+    #                              port: 443,
+    #                              protocol: "HTTPS",
+    #                            })
 
-      Rails.logger.debug "#----------------------------------------------------------------------------------------------------"
-      Rails.logger.debug load_balancer.inspect
-      Rails.logger.debug load_balancer.load_balancer_arn.inspect
+    Rails.logger.debug "#----------------------------------------------------------------------------------------------------"
+    Rails.logger.debug load_balancer.inspect
+    Rails.logger.debug load_balancer.load_balancer_arn.inspect
 
 
 
