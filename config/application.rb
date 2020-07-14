@@ -40,6 +40,7 @@ module Flywheel
         exclude: -> req { env=req.env; env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] && env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker') }
       }
     }
+    config.active_job.queue_adapter = :sidekiq
 
   end
 end
