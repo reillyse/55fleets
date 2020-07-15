@@ -23,7 +23,7 @@ class LogEntriesController < ApplicationController
           @last_log = @log_entries.map(&:log_line).max
           render :json => @log_entries.to_json
         else
-          render :text => "", :status => :ok and return
+          render :plain => "", :status => :ok and return
         end
       end
     end

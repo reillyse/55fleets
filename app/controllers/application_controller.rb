@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :find_app
 
   def keep_alive
-    render :text => :ok, :status => :ok
+    render :plain => :ok, :status => :ok
   end
   private
 
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from NotAllowed do |exception|
-    render text: "This user does not have permission to access this resource", status: 401
+    render plain: "This user does not have permission to access this resource", status: 401
     Rails.logger.debug exception.message
 
   end

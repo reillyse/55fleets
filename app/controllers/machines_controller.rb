@@ -11,8 +11,8 @@ class MachinesController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to app_fleet_path(@app,@machine.fleet) and return }
-      format.js { render :text => "ok", :status => :ok}
-      format.json { render :text => "ok", :status => :ok}
+      format.js { render :plain => "ok", :status => :ok}
+      format.json { render :plain => "ok", :status => :ok}
 
     end
 
