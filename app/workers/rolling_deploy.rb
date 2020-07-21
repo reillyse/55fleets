@@ -12,12 +12,13 @@ class RollingDeploy < ActiveJob::Base
       return "weve already started this deploy" unless fleet.rolling_deploy_started_at.nil?
 
       machines = fleet.machines.select { |m| m.pod.load_balanced? }
-      return "pods not all built" unless fleet.pods.all?{ |p| p.image_available?}
+      Rails.logger.warn "pods not all built" and return unless fleet.pods.all?{ |p| p.image_available?}
+      
 
       #we only care about having enough running machines not that they are all running
 #      return "machines not all running" unless machines.all?(&:running?)
 #      return "machines not all deployed"  unless machines.all?{ |m| m.deployed_at}
-      return "we dont have the amount of machines we need"  unless fleet.pods.select(&:load_balanced?).all?{ |p| p.machines.select(&:deployed_at).count >= p.permanent_minimum }
+      Rails.logger.warn  "we dont have the amount of machines we need" and return  unless fleet.pods.select(&:load_balanced?).all?{ |p| p.machines.select(&:deployed_at).count >= p.permanent_minimum }
 
       fleet.rolling_deploy_started_at = Time.now
       fleet.save!

@@ -19,7 +19,7 @@ production:
   adapter: postgresql
   encoding: utf8
   database: flywheel_production
-  pool: 24
+  pool: 44
   password: <%= ENV["POSTGRES_PASS"] %>
   host: <%= ENV["POSTGRES_HOST"] %>
   username: <%= ENV["POSTGRES_USERNAME"] %>
@@ -29,7 +29,7 @@ staging:
   adapter: postgresql
   encoding: utf8
   database: 55fleets_staging
-  pool: 20
+  pool: 30
   password: <%= ENV["POSTGRES_PASS"] %>
   host: <%= ENV["POSTGRES_HOST"] %>
   username: <%= ENV["POSTGRES_USERNAME"] %>
