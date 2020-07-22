@@ -55,7 +55,7 @@ class BalancerService
     machines.each { |m|
 
       BalancerService.new.register_instance m.id,nil,elb_arns
-      Rails.logger.info "Registered #{m.ip_address}"
+      Rails.logger.info "Registered #{m.ip_address} #{m.instance_id}"
     }
 
     arns = elb_arns.split(",")

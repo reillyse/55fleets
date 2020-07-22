@@ -92,7 +92,7 @@ Rails.application.configure do
   ENV["BUILD_MACHINE_TYPES"] = "t3.medium,c4.large,m5.large"
 
 
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = "d12p6pkcfxadyp.cloudfront.net"
   config.assets.prefix = "/production/assets"
   config.assets.initialize_on_precompile  = true
   config.assets.enabled = true

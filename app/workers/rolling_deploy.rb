@@ -9,11 +9,13 @@ class RollingDeploy < ActiveJob::Base
 
     Fleet.transaction do
       fleet.lock!('FOR UPDATE NOWAIT')
-      return "weve already started this deploy" unless fleet.rolling_deploy_started_at.nil?
+      if fleet.rolling_deploy_started_at && fleet.rolling_deploy_started_at > 10.minutes.ago
+        raise "We've already started and too soon to restart"
+      end
 
       machines = fleet.machines.select { |m| m.pod.load_balanced? }
       Rails.logger.warn "pods not all built" and return unless fleet.pods.all?{ |p| p.image_available?}
-      
+
 
       #we only care about having enough running machines not that they are all running
 #      return "machines not all running" unless machines.all?(&:running?)

@@ -31,14 +31,14 @@ Rails.application.configure do
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-   config.action_controller.asset_host =  "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host =  "d12p6pkcfxadyp.cloudfront.net"
    config.assets.prefix = "/production/assets"
    config.assets.initialize_on_precompile  = false
    config.assets.enabled = true
    ENV["REDIS_DB"] = "6"
    ENV["BUILD_MACHINE_POOL_SIZE"]= "2"
    ENV["BUILD_MACHINE_TYPES"] = "m5.large,c4.large"
-   
+
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
