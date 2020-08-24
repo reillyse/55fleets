@@ -1,15 +1,14 @@
 class BuildMachineMaintWorker
-
   include Sidekiq::Worker
   #do this every 20 minutes
   sidekiq_options retry: 0
 
-
   def perform
-    App.build_system.pods.first.machines.running.order("id desc").select{ |s| s.busy && s.busy < 20.minutes.ago }.map(&:recycle_as_new)
+    App.build_system.pods.first.machines.running.order('id desc').select do |s|
+      s.busy && s.busy < 20.minutes.ago
+    end.map(&:recycle_as_new)
   end
 end
-
 
 #SELECT pg_terminate_backend(22448)
 

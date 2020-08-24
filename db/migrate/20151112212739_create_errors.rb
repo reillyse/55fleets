@@ -4,7 +4,7 @@ class CreateErrors < ActiveRecord::Migration
       t.string :message
       t.integer :errorable_id
       t.string :errorable_type
-      
+
       t.timestamps null: false
     end
   end

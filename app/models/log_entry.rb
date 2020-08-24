@@ -1,14 +1,9 @@
 require 'autoinc'
 
 class LogEntry
-
   include Mongoid::Document
   include Mongoid::Autoinc
   include Mongoid::Timestamps
-
-
-
-
 
   field :stdout, type: String
   field :stderr, type: String
@@ -22,10 +17,9 @@ class LogEntry
 
   field :exit_code, type: String
 
-  index({ machine_id: 1, log_line: 1})
+  index({ machine_id: 1, log_line: 1 })
 
-
-  def self.write_log params
+  def self.write_log(params)
     begin
       LogEntry.create! params
     rescue => e

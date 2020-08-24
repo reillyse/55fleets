@@ -1,2 +1,1 @@
-module AppsHelper
-end
+module AppsHelper; end

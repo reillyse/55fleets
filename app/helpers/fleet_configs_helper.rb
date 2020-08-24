@@ -1,2 +1,1 @@
-module FleetConfigsHelper
-end
+module FleetConfigsHelper; end

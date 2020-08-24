@@ -1,2 +1,1 @@
-module LoadBalancersHelper
-end
+module LoadBalancersHelper; end

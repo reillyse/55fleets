@@ -1,5 +1,5 @@
 Rails.application.configure do
-  ENV["FOG_DIRECTORY"] = "tankerfleet"
+  ENV['FOG_DIRECTORY'] = 'tankerfleet'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -12,7 +12,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
@@ -44,13 +44,15 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
 
-  config.middleware.use Rack::SslEnforcer,  :except => proc { |req| env=req.env; env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] && env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker') }
-
-
-
-
-
-
+  config.middleware.use Rack::SslEnforcer,
+                        except:
+                          proc { |req|
+                            env = req.env
+                            env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] &&
+                              env['HTTP_USER_AGENT'].starts_with?(
+                                'ELB-HealthChecker'
+                              )
+                          }
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -59,15 +61,13 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
-
-
-
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host =
+    "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -86,15 +86,12 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  ENV['REDIS_DB'] = '5'
+  ENV['BUILD_MACHINE_POOL_SIZE'] = '1'
+  ENV['BUILD_MACHINE_TYPES'] = 't3.medium,c4.large,m5.large'
 
-  ENV["REDIS_DB"] = "5"
-  ENV["BUILD_MACHINE_POOL_SIZE"]= "1"
-  ENV["BUILD_MACHINE_TYPES"] = "t3.medium,c4.large,m5.large"
-
-
-  config.action_controller.asset_host = "d12p6pkcfxadyp.cloudfront.net"
-  config.assets.prefix = "/production/assets"
-  config.assets.initialize_on_precompile  = true
+  config.action_controller.asset_host = 'd12p6pkcfxadyp.cloudfront.net'
+  config.assets.prefix = '/production/assets'
+  config.assets.initialize_on_precompile = true
   config.assets.enabled = true
-
 end

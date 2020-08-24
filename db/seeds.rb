@@ -6,6 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-app = App.create! :name => "build_system"
-pod = app.pods.create! :name => "build_pod", :number_of_members => 2, :ami => "ami-8d3040e7"
-
+app = App.create! name: 'build_system'
+pod =
+  app.pods.create! name: 'build_pod', number_of_members: 2, ami: 'ami-8d3040e7'

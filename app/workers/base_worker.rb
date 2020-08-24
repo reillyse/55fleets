@@ -1,5 +1,4 @@
 module BaseWorker
-
   def self.included(base)
     base.extend(NewMethods)
   end
@@ -9,8 +8,7 @@ module BaseWorker
     mattr_accessor :starting_state_name
     mattr_accessor :ending_state_name
     mattr_accessor :object_class_name
-    
-    
+
     def get_starting_state
       return self.starting_state_name
     end
@@ -18,17 +16,12 @@ module BaseWorker
     def get_ending_state
       return self.ending_state_name
     end
-    
-    def class_name name
+
+    def class_name(name)
       self.object_class_name = name
     end
 
-    
-    
-    
-
-    
-    def starting_state(state_name=nil, &block)
+    def starting_state(state_name = nil, &block)
       if block_given?
         self.starting_state_name = block
       else
@@ -36,7 +29,7 @@ module BaseWorker
       end
     end
 
-    def ending_state(state_name=nil, &block)
+    def ending_state(state_name = nil, &block)
       if block_given?
         self.ending_state_name = block
       else
@@ -44,41 +37,45 @@ module BaseWorker
       end
     end
 
-    def check_the_starting_state object
-      Rails.logger.debug "-------------------- states"
+    def check_the_starting_state(object)
+      Rails.logger.debug '-------------------- states'
       Rails.logger.debug object.state.to_s.inspect
       Rails.logger.debug self.starting_state_name.to_s.inspect
-      Rails.logger.debug "-------------------- state check over"
-      
+      Rails.logger.debug '-------------------- state check over'
+
       return false unless object.state.to_s == self.starting_state_name.to_s
       return true
     end
 
-    def check_the_ending_state object
+    def check_the_ending_state(object)
       return false unless object.state.to_s == self.ending_state_name.to_s
       return true
     end
-    
-
   end
 
-  
-  def perform object_id
-    self.object = self.class.object_class_name.to_s.classify.constantize.find object_id
-    
+  def perform(object_id)
+    self.object =
+      self.class.object_class_name.to_s.classify.constantize.find object_id
+
     Rails.logger.debug object
-    return "Wrong Starting State #{self.class.starting_state_name} != #{object.state}" unless  self.class.check_the_starting_state(object)
+    unless self.class.check_the_starting_state(object)
+      return(
+        "Wrong Starting State #{self.class.starting_state_name} != #{
+          object.state
+        }"
+      )
+    end
 
     mutate object
 
     self.object = self.object.reload
-    raise "Wrong Ending State #{self.class.ending_state_name} != #{object.state}" unless self.class.check_the_ending_state object
-    
+    unless self.class.check_the_ending_state object
+      raise "Wrong Ending State #{self.class.ending_state_name} != #{
+              object.state
+            }"
+    end
   end
 
-  
-  
-  
   # def perform obj_id
 
   #   object = Object.find obj_id
@@ -95,8 +92,6 @@ module BaseWorker
   #     object.state = state
   #     object.save!
   #   end
-  
-
 
   # end
 end

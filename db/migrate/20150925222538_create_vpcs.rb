@@ -7,7 +7,7 @@ class CreateVpcs < ActiveRecord::Migration
       t.string :state
       t.string :subnet_id
       t.string :availability_zone
-      t.string :region      
+      t.string :region
       t.timestamps null: false
     end
   end

@@ -1,5 +1,3 @@
 class AddFieldsToSshKeys < ActiveRecord::Migration
-  def change
-
-  end
+  def change; end
 end

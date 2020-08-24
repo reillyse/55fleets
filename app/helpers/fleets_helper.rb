@@ -1,2 +1,1 @@
-module FleetsHelper
-end
+module FleetsHelper; end

@@ -1,17 +1,12 @@
 class AppTeardown < ActiveJob::Base
-
   queue_as :low
 
-  def perform app_id
+  def perform(app_id)
     #need to have no machines first
     app = App.find app_id
-    app.load_balancers.each { |lb|
-      lb.kill
-    }
+    app.load_balancers.each(&:kill)
 
-    app.vpcs.each { |v|
-
-      v.kill}
+    app.vpcs.each(&:kill)
     app.delete
   end
 end

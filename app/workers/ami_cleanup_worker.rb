@@ -2,13 +2,14 @@
 
 class AmiCleanupWorker
   include Sidekiq::Worker
-  sidekiq_options :queue => :low
+  sidekiq_options queue: :low
 
   def perform
-    Pod.where(:state => "image_available").where("updated_at < ?", 1.month.ago).each { |pod|
+    Pod.where(state: 'image_available').where('updated_at < ?', 1.month.ago)
+      .each do |pod|
       if !pod.fleet.is_most_recent? && pod.machines.running.size == 0
         pod.cleanup_ami
       end
-    }
+    end
   end
 end

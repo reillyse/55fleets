@@ -1,2 +1,1 @@
-class MachineImage < ActiveRecord::Base
-end
+class MachineImage < ActiveRecord::Base; end

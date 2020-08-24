@@ -3,7 +3,7 @@ class CreateSubnets < ActiveRecord::Migration
     create_table :subnets do |t|
       t.integer :vpc_id
       t.string :subnet_id
-      t.string  :availability_zone
+      t.string :availability_zone
       t.timestamps null: false
     end
   end

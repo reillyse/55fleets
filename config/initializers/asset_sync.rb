@@ -11,7 +11,7 @@ AssetSync.configure do |config|
   # config.invalidate = ['file1.js']
 
   # Increase upload performance by configuring your region
-  config.fog_region = ENV["AWS_REGION"] || 'us-east-1'
+  config.fog_region = ENV['AWS_REGION'] || 'us-east-1'
   #
   # Don't delete files from the store
   # config.existing_remote_files = "keep"

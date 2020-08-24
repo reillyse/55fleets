@@ -1,41 +1,38 @@
 class Vpc < ActiveRecord::Base
-
-  validates :name ,:presence => true
+  validates :name, presence: true
   belongs_to :app
   has_many :subnets
   has_many :internet_gateways
 
-  state_machine :state, :initial => :created do
-    event :starting  do
-      transition [:created ] => :starting
+  state_machine :state, initial: :created do
+    event :starting do
+      transition %i[created] => :starting
     end
 
-    event :activated  do
-      transition [:starting ] => :active
+    event :activated do
+      transition %i[starting] => :active
     end
 
     event :shutdown do
-      transition [:active,:terminating] => :terminating
+      transition %i[active terminating] => :terminating
     end
 
     event :terminated do
-      transition [:terminating] => :terminated
+      transition %i[terminating] => :terminated
     end
 
     event :failed do
       transition any => :failed
     end
-
   end
 
-  scope :created,  -> { where(:state => ["starting","active"])}
+  scope :created, -> { where(state: %w[starting active]) }
 
   def kill
     self.shutdown!
     NetworkConfig.new.kill_vpc(self.vpc_id)
     self.terminated!
     save!
-
   end
 
   def fetch_subnets
@@ -46,5 +43,4 @@ class Vpc < ActiveRecord::Base
   def has_internet_gateway?
     !NetworkConfig.new.get_internet_gateways_for_vpc(self).to_a.empty?
   end
-
-  end
+end

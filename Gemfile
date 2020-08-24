@@ -9,6 +9,8 @@ gem 'pg',"0.18.4"
 gem "mongoid" #,  "~> 5.0.0"
 gem "mongoid-autoinc" #, '~> 5.0.0'
 
+gem "prettier"
+
 
 
 gem "react-rails", "2.3.1"

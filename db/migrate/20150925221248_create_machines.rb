@@ -7,9 +7,9 @@ class CreateMachines < ActiveRecord::Migration
       t.text :ip_address
       t.text :state
       t.datetime :started_at
-      t.datetime :stopped_at      
+      t.datetime :stopped_at
       t.text :ami_name
-      t.integer :vpc_id      
+      t.integer :vpc_id
       t.timestamps null: false
     end
   end

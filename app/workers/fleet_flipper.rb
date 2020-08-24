@@ -1,8 +1,7 @@
 class FleetFlipper
   include Sidekiq::Worker
 
-  def perform app_id
-
+  def perform(app_id)
     @app = App.find app_id
     if Time.now.monday?
       Rails.logger.info("Re launching #{@app.name}")
@@ -10,7 +9,5 @@ class FleetFlipper
     else
       @app.latest_deployed_fleet.redeploy_this_fleet
     end
-
   end
-
 end

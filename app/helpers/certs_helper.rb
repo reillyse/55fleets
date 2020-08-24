@@ -1,2 +1,1 @@
-module CertsHelper
-end
+module CertsHelper; end

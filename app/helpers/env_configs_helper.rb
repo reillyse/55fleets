@@ -1,2 +1,1 @@
-module EnvConfigsHelper
-end
+module EnvConfigsHelper; end

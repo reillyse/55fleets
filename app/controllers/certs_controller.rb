@@ -1,21 +1,18 @@
 class CertsController < ApplicationController
   before_action :find_app
-  
+
   def new
-    @cert = @app.certs.new :port => "443"
+    @cert = @app.certs.new port: '443'
   end
 
   def create
-    begin
-      params.permit!
-      @cert = @app.certs.create! params[:cert]
-      redirect_to [@app,@cert]
-
-    rescue => e
-      Rails.logger.debug e.message
-      Rails.logger.debug e.message
-      redirect_to app_certs_path(@app), :flash => { :error => e.message }
-    end
+    params.permit!
+    @cert = @app.certs.create! params[:cert]
+    redirect_to [@app, @cert]
+  rescue => e
+    Rails.logger.debug e.message
+    Rails.logger.debug e.message
+    redirect_to app_certs_path(@app), flash: { error: e.message }
   end
 
   def index
@@ -31,6 +28,4 @@ class CertsController < ApplicationController
   def show
     @cert = @app.certs.find params[:id]
   end
-
-  
 end

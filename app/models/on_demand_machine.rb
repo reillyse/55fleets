@@ -1,4 +1,1 @@
-class OnDemandMachine < Machine
-
-  
-end
+class OnDemandMachine < Machine; end

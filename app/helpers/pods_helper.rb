@@ -1,2 +1,1 @@
-module PodsHelper
-end
+module PodsHelper; end

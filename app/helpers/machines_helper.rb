@@ -1,2 +1,1 @@
-module MachinesHelper
-end
+module MachinesHelper; end

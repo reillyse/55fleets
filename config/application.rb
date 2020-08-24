@@ -16,18 +16,15 @@ module Flywheel
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.react.variant      = :production
-    config.react.addons       = true
+    config.react.variant = :production
+    config.react.addons = true
 
-    config.react.jsx_transform_options = {
-      optional: ['es7.classProperties']
-    }
+    config.react.jsx_transform_options = { optional: %w[es7.classProperties] }
 
-    config.generators do |g|
-      g.orm :active_record
-    end
+    config.generators { |g| g.orm :active_record }
 
-    Rails.application.config.active_record.belongs_to_required_by_default = false
+    Rails.application.config.active_record.belongs_to_required_by_default =
+      false
 
     config.to_prepare do
       Devise::SessionsController.skip_before_action :find_app
@@ -37,10 +34,13 @@ module Flywheel
     config.force_ssl = true
     config.ssl_options = {
       redirect: {
-        exclude: -> req { env=req.env; env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] && env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker') }
+        exclude: lambda do |req|
+          env = req.env
+          env['PATH_INFO'] == '/' && env['HTTP_USER_AGENT'] &&
+            env['HTTP_USER_AGENT'].starts_with?('ELB-HealthChecker')
+        end
       }
     }
     config.active_job.queue_adapter = :sidekiq
-
   end
 end

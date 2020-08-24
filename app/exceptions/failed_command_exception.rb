@@ -1,3 +1,1 @@
-class FailedCommandException < StandardError
-  
-end
+class FailedCommandException < StandardError; end
