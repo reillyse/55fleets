@@ -9,7 +9,7 @@ class Pod < ActiveRecord::Base
   belongs_to :app, touch: true
   belongs_to :fleet, touch: true
   belongs_to :repo
-  belongs_to :builder, class_name: 'Machine'
+  belongs_to :builder, class_name: "Machine"
   has_one :spot_fleet_request
   #after_commit :initialize_machines, :on => :create
   after_commit :build_pod, on: :create
@@ -60,7 +60,7 @@ class Pod < ActiveRecord::Base
 
   def log_command
     if self.compose_filename.blank?
-      return 'docker-compose logs'
+      return "docker-compose logs"
     else
       return "docker-compose -f #{self.compose_filename} logs"
     end
@@ -79,9 +79,7 @@ class Pod < ActiveRecord::Base
       Rails.logger.debug "Scaling up permanent to #{self.permanent_minimum}"
       scale_up_permanent(self.permanent_minimum)
     elsif current_on_demand_machines > self.permanent_minimum
-      Rails.logger.debug "Scaling down permanent minimum to #{
-                           self.permanent_minimum
-                         }"
+      Rails.logger.debug "Scaling down permanent minimum to #{self.permanent_minimum}"
       scale_down_permanent(self.permanent_minimum)
     end
   end
@@ -105,7 +103,7 @@ class Pod < ActiveRecord::Base
   end
 
   def get_spot_machines(instance_count)
-    Rails.logger.debug 'Getting spot machines'
+    Rails.logger.debug "Getting spot machines"
 
     self.spot_fleet_request =
       PoolManager.create_fleet instance_count, self, self.instance_type
@@ -115,13 +113,13 @@ class Pod < ActiveRecord::Base
 
   def add_on_demand_machines(instance_count)
     return unless instance_count && instance_count > 0
-    Rails.logger.debug 'Should make some machines'
+    Rails.logger.debug "Should make some machines"
     new_machines = []
 
     instance_count.times do
       new_machines <<
         self.on_demand_machines.create!(
-          instance_type: self.instance_type, subnet_id: next_subnet.id
+          instance_type: self.instance_type, subnet_id: next_subnet.id,
         )
     end
     new_machines.each do |machine|
@@ -142,7 +140,7 @@ class Pod < ActiveRecord::Base
     elsif value < self.permanent_minimum
       scale_down_permanent value
     else
-      Rails.logger.debug 'no change'
+      Rails.logger.debug "no change"
     end
   end
 
@@ -151,7 +149,7 @@ class Pod < ActiveRecord::Base
 
     save!
 
-    self.with_lock('FOR UPDATE NOWAIT') do
+    self.with_lock("FOR UPDATE NOWAIT") do
       current_count = self.on_demand_machines.running.count
       number_to_be_added = value - current_count
 
@@ -166,7 +164,7 @@ class Pod < ActiveRecord::Base
 
     save!
 
-    self.with_lock('FOR UPDATE NOWAIT') do
+    self.with_lock("FOR UPDATE NOWAIT") do
       current_count = self.on_demand_machines.running.count
       number_to_be_removed = current_count - value
 
@@ -177,7 +175,7 @@ class Pod < ActiveRecord::Base
   end
 
   def scale_spot(value)
-    Rails.logger.debug 'Scaling spot'
+    Rails.logger.debug "Scaling spot"
     self.spot_amount = value
     save!
 
@@ -209,5 +207,7 @@ class Pod < ActiveRecord::Base
     self.clean_up!
   rescue Aws::EC2::Errors::ServiceError => e
     Rails.logger.debug e.message
+  rescue => e
+    Rails.logger.error e.message
   end
 end
