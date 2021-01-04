@@ -1,13 +1,13 @@
 instance_monitor:
   every:
-    - "30s"
+    - "5m"
   class: InstanceMonitor
   queue: low
   description: "This job will check the monitor every 30 seconds"
 
 fleet_checker:
   every:
-    - "30s"
+    - "5m"
   class: FleetChecker
   queue: low
   description: "This job will check the monitor every 30 seconds"
@@ -20,14 +20,14 @@ fleet_flipper_sched:
 
 machine_updater:
   every:
-    - "30s"
+    - "5m"
   class: MachineMonitor
   queue: low
   description: "Updates all the machines from whats happening on Amazon"
 
 build_maint_worker:
   every:
-    - "30s"
+    - "5m"
   class: BuildMachineMaintWorker
   queue: low
   description: "Clean up any builds that have taken too long"
