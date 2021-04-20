@@ -1529,6 +1529,7 @@ DEPENDENCIES
   rails (>= 6.0.0)
   rails_12factor
   rails_stdout_logging
+  rake
   rb-readline
   react-rails (= 2.3.1)
   redis

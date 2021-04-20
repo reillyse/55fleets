@@ -11,7 +11,7 @@ gem "mongoid-autoinc" #, '~> 5.0.0'
 
 gem "prettier"
 
-
+gem "rake"
 
 gem "react-rails", "2.3.1"
 
