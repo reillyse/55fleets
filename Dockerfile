@@ -17,7 +17,7 @@ EXPOSE 3000
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
-RUN bundle install
+RUN bundle config set deployment 'true' &&  bundle install
 COPY . /usr/src/app
 #FROM bishbashbox/base-rails
 
