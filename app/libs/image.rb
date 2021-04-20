@@ -9,8 +9,8 @@ class Image
         {
           instance_id: machine.instance_id,
           name: "#{pod.app.name}-#{pod.name}-#{Time.now.to_i}",
-          description: 'Automatically generated',
-          no_reboot: false
+          description: "Automatically generated",
+          no_reboot: false,
         }
       )
     # block_device_mappings: [
@@ -41,7 +41,7 @@ class Image
   def delete_ami(ami)
     res = client.describe_images({ image_ids: [ami] })
     snapshots =
-      res.images.map(&:block_device_mappings).flatten.map do |bdm|
+      res.images.map(&:block_device_mappings).flatten.select { |bdm| bdm.ebs }.map do |bdm|
         bdm.ebs.snapshot_id
       end
     client.deregister_image({ image_id: ami })

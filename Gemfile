@@ -5,7 +5,7 @@ gem "powder"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.0.0'
 # Use sqlite3 as the database for Active Record
-gem 'pg',"0.18.4"
+gem 'pg'
 gem "mongoid" #,  "~> 5.0.0"
 gem "mongoid-autoinc" #, '~> 5.0.0'
 
@@ -32,7 +32,7 @@ gem "net-scp"
 
 gem "ar_after_transaction"
 
-gem 'actionpack-action_caching'
+gem 'actionpack-action_caching' ,github: 'rails/actionpack-action_caching', ref: '7bdfa663274a2620dde8daad7dcb995c1cfef840'
 
 
 gem "rack-timeout"

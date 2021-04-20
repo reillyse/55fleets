@@ -48,7 +48,7 @@ class Pod < ActiveRecord::Base
     end
 
     event :clean_up do
-      transition image_available: %i[cleaned_up]
+      transition image_available: :cleaned_up
     end
     #before_transition any => :built, :do => :build_image
     after_transition any => :built, do: :create_image
