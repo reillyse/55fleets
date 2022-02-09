@@ -63,8 +63,8 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
-  ENV['REDIS_DB'] = '7'
+  ENV['RACK_TIMEOUT_SERVICE_TIMEOUT'] = '30'
+  ENV['REDIS_DB'] = '6'
   Mongo::Logger.logger = ::Logger.new('tmp/mongo.log')
   Mongo::Logger.logger.level = ::Logger::INFO
   ENV['BUILD_MACHINE_POOL_SIZE'] = '1'

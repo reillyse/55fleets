@@ -18,7 +18,7 @@ test:
 production:
   adapter: postgresql
   encoding: utf8
-  database: flywheel_production
+  database: vleijhyu
   pool: 55
   password: <%= ENV["POSTGRES_PASS"] %>
   host: <%= ENV["POSTGRES_HOST"] %>

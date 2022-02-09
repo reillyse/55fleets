@@ -1,7 +1,7 @@
 require 'aws-sdk-core'
 
 class BalancerService
-  def register_instance(machine_id, subnet_id = nil, elb_arns)
+  def register_instance(machine_id, _subnet_id = nil, elb_arns)
     machine = Machine.find machine_id
 
     elb = elb_client
@@ -79,7 +79,7 @@ class BalancerService
         :target_in_service,
         { target_group_arn: target_group_arn },
         {
-          before_wait: lambda do |attempts, response|
+          before_wait: lambda do |_attempts, response|
             Rails.logger.info(
               "In ELB register response is: #{response.to_h.to_yaml}"
             )
@@ -96,25 +96,29 @@ class BalancerService
       registered_instance_ids =
         registered_instance_ids.uniq - machines.map(&:instance_id)
 
-      if registered_instance_ids.size > 0
-        Rails.logger.debug "deregistering #{registered_instance_ids.to_s}"
+      next unless registered_instance_ids.size > 0
 
-        registered_instance_ids.each do |i_id|
-          deregister_instance i_id, elb_arn
-        end
+      Rails.logger.debug "deregistering #{registered_instance_ids}"
 
-        ec2 = Aws::EC2::Client.new
-        registered_instance_ids.each do |i_id|
-          m = Machine.find_by_instance_id i_id
-          Rails.logger.debug "Balancer Service reaping machine id =#{m.id}"
-          Reaper.set(wait_until: 10.seconds.from_now).perform_later(m.id)
-        end
+      registered_instance_ids.each do |i_id|
+        deregister_instance i_id, elb_arn
+      end
+
+      ec2 = Aws::EC2::Client.new
+      registered_instance_ids.each do |i_id|
+        m = Machine.find_by_instance_id i_id
+        next unless m
+
+        Rails.logger.debug "Balancer Service reaping machine id =#{m.id}"
+        Reaper.set(wait_until: 10.seconds.from_now).perform_later(m.id)
       end
     end
   end
 
   def deregister_instance(i_id, elb_arn)
     m = Machine.find_by_instance_id i_id
+    return unless m
+
     unless m.fleet.deregistered
       m.fleet.deregistered = Time.now
       m.fleet.save!
@@ -135,14 +139,12 @@ class BalancerService
 
   def get_instance_ids_from_elb_arn(elb_arn)
     targets = get_targets_from_elb_arn(elb_arn)
-    return targets.to_h[:target_health_descriptions].map { |s| s[:target][:id] }
+    targets.to_h[:target_health_descriptions].map { |s| s[:target][:id] }
   end
 
   def get_first_target_group_from_elb_arn(elb_arn)
     resp = elb_client.describe_target_groups({ load_balancer_arn: elb_arn })
-    target_group_arn = resp.target_groups[0].target_group_arn
-
-    return target_group_arn
+    resp.target_groups[0].target_group_arn
   end
 
   # def deregister_instance machine
@@ -179,7 +181,7 @@ class BalancerService
           name: elb_name,
           subnets:
             # required
-            #, availability_zones: ["AvailabilityZone"],
+            # , availability_zones: ["AvailabilityZone"],
             subnets.map(&:subnet_id)
         }
       ).first.load_balancers.first
@@ -240,7 +242,7 @@ class BalancerService
     Rails.logger.debug load_balancer.inspect
     Rails.logger.debug load_balancer.load_balancer_arn.inspect
 
-    return lb
+    lb
   end
 
   def get_url_for_load_balancer(lb)
@@ -248,7 +250,7 @@ class BalancerService
       Aws::ElasticLoadBalancingV2::Client.new.describe_load_balancers(
         { load_balancer_arns: [lb.arn] }
       )
-    return elb.load_balancers[0].dns_name
+    elb.load_balancers[0].dns_name
   end
 
   def kill_load_balancers(arns)
