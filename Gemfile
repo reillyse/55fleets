@@ -101,3 +101,6 @@ end
 
 gem "parallel"
 gem "ruby-progressbar"
+
+
+gem 'nio4r', '2.5.8'

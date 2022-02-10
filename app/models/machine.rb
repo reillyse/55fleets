@@ -27,7 +27,7 @@ class Machine < ActiveRecord::Base
     end
 
     event :deployed do
-      transition any => :running
+      transition any => :running    
     end
 
     event :shutdown do
