@@ -1203,7 +1203,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
     devise (4.7.3)
@@ -1244,8 +1244,8 @@ GEM
     formatador (0.2.5)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
-    globalid (0.4.2)
-      activesupport (>= 4.2.0)
+    globalid (1.0.1)
+      activesupport (>= 5.0)
     haml (5.2.1)
       temple (>= 0.8.0)
       tilt
@@ -1261,7 +1261,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (1.8.10)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
     jbuilder (2.11.2)
@@ -1298,7 +1298,7 @@ GEM
     mime-types-data (3.2021.0225)
     mini_mime (1.0.3)
     mini_portile2 (2.5.0)
-    minitest (5.14.4)
+    minitest (5.17.0)
     mongo (2.14.0)
       bson (>= 4.8.2, < 5.0.0)
     mongoid (7.2.2)
@@ -1476,7 +1476,7 @@ GEM
       execjs (>= 2.2.2, >= 2.2)
       less-rails (>= 2.5.0)
       railties (>= 3.1)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
       unf_ext
@@ -1492,7 +1492,7 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.4.2)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
