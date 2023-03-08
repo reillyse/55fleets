@@ -1348,7 +1348,7 @@ GEM
     prettier (1.5.5)
     public_suffix (4.0.6)
     racc (1.5.2)
-    rack (2.2.3)
+    rack (2.2.6.3)
     rack-cache (1.12.1)
       rack (>= 0.4)
     rack-protection (2.1.0)
